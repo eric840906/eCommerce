@@ -1,0 +1,18 @@
+$primary: #906c64;
+@import url('https://fonts.googleapis.com/css2?family=Aclonica&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;500;800&display=swap');
+.btn-outline-primary{
+  &:hover {
+    color: white !important;
+  }
+}
+.text-nav-link {
+  color: black;
+}
+.font-awesome-icon {
+  width: 12px;
+}
+.title-color {
+  color: #4d3220;
+}
+@import 'node_modules/bootstrap/scss/bootstrap.scss';

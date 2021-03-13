@@ -1,18 +1,68 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <div class="container">
+      <ColumnList :list="testData" :scrollPos="scroll"></ColumnList>
+    </div>
+    <div class="container">
+      <Photo></Photo>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
-
-@Options({
+import { screenSize } from '@/hook/screenSize'
+import { scrollPosition } from '@/hook/scrollTop'
+import { useStore } from 'vuex'
+import { defineComponent, computed } from 'vue'
+import { StoreProps } from '@/store/index'
+import Photo from '@/components/Photos2.vue'
+import ColumnList, { ColumnProps } from '@/components/ColumnList.vue'
+const testData: ColumnProps[] = [
+  {
+    id: 1,
+    title: 'ASDASD',
+    avatar: 'https://images.dog.ceo/breeds/elkhound-norwegian/n02091467_872.jpg',
+    desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ipsam quisquam praesentium doloremque rem fugiat eaque, hic commodi totam distinctio voluptatum iure! Earum cupiditate assumenda nihil possimus totam veniam tenetur.'
+  },
+  {
+    id: 2,
+    title: 'ASDASD',
+    avatar: 'https://images.dog.ceo/breeds/terrier-fox/n02095314_663.jpg',
+    desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ipsam quisquam praesentium doloremque rem fugiat eaque, hic commodi totam distinctio voluptatum iure! Earum cupiditate assumenda nihil possimus totam veniam tenetur.'
+  },
+  {
+    id: 3,
+    title: 'ASDASD',
+    avatar: 'https://images.dog.ceo/breeds/terrier-fox/n02095314_663.jpg',
+    desc: 'asdasd'
+  },
+  {
+    id: 4,
+    title: 'ASDASD',
+    desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ipsam quisquam praesentium doloremque rem fugiat eaque, hic commodi totam distinctio voluptatum iure! Earum cupiditate assumenda nihil possimus totam veniam tenetur.'
+  },
+  {
+    id: 5,
+    title: 'ASDASD',
+    desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ipsam quisquam praesentium doloremque rem fugiat eaque, hic commodi totam distinctio voluptatum iure! Earum cupiditate assumenda nihil possimus totam veniam tenetur.'
+  }
+]
+export default defineComponent({
   components: {
-    HelloWorld
+    ColumnList,
+    Photo
+  },
+  setup () {
+    const store = useStore<StoreProps>()
+    const screenWidth = computed(() => {
+      return store.state.screenSize
+    })
+    screenSize()
+    scrollPosition()
+    const scroll = computed(() => {
+      return store.state.scrollY
+    })
+    return { testData, screenWidth, scroll }
   }
 })
-export default class Home extends Vue {}
 </script>

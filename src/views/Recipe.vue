@@ -1,0 +1,7 @@
+<template>
+  <div class="Recipe">
+    <div class="container">
+      <h1>Recipe</h1>
+    </div>
+  </div>
+</template>
