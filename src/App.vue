@@ -44,6 +44,7 @@ export default defineComponent({
   },
   setup () {
     const modalComponent = ref('')
+    const dialogMessage = ref('')
     const store = useStore()
     const screenWidth = computed(() => {
       return store.getters.getScreenSize
@@ -63,7 +64,7 @@ export default defineComponent({
     const loading = computed(() => {
       return store.getters.getLoading
     })
-    return { screenWidth, scroll, modalComponent, loading }
+    return { screenWidth, scroll, modalComponent, loading, dialogMessage }
   }
 })
 </script>

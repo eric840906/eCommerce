@@ -21,12 +21,15 @@
 </template>
 
 <script lang="ts">
+import { useToast } from 'vue-toastification'
 import axios from 'axios'
 import { useStore } from 'vuex'
 import { defineComponent, ref } from 'vue'
+import bus from '@/plugins/bus'
 
 export default defineComponent({
   setup () {
+    const toast = useToast()
     const store = useStore()
     const name = ref('')
     const email = ref('')
@@ -47,9 +50,14 @@ export default defineComponent({
           }
         })
         console.log(res)
-        // if()
+        if (res.data.state === 'success') {
+          bus.emit('modal-close')
+          toast.success('Welcome!')
+          store.dispatch('loading')
+        }
       } catch (error) {
         store.dispatch('loading')
+        toast.error(error.response.data.message)
         console.log(error.response)
       }
       // console.log(`name=${name.value}, email=${email.value}, password=${password.value}, passwordConfirm=${passwordConfirm.value}`)
