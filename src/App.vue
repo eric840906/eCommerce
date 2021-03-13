@@ -1,4 +1,13 @@
 <template>
+  <teleport to='body'>
+    <Loading :isLoading='loading'></Loading>
+  </teleport>
+  <Modal>
+    <template v-slot:header>
+      <h5>{{modalComponent}}</h5>
+    </template>
+    <component :is="modalComponent"></component>
+  </Modal>
   <Navbar :screenSize='screenWidth' :scrollPos="scroll"></Navbar>
   <Banner></Banner>
   <div>
@@ -19,26 +28,42 @@ import { screenSize } from '@/hook/screenSize'
 import { scrollPosition } from '@/hook/scrollTop'
 import Banner from '@/components/banner.vue'
 import { useStore } from 'vuex'
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/footer.vue'
+import Modal from '@/components/modal.vue'
+import Loading from '@/components/loading.vue'
+import bus from '@/plugins/bus'
 export default defineComponent({
   components: {
     Navbar,
     Banner,
-    Footer
+    Footer,
+    Modal,
+    Loading
   },
   setup () {
+    const modalComponent = ref('')
     const store = useStore()
     const screenWidth = computed(() => {
       return store.getters.getScreenSize
     })
+    const mountModal = (modalName: string) => {
+      if (typeof (modalName) === 'string') {
+        modalComponent.value = modalName
+      }
+    }
+    bus.on('Login-open', () => mountModal('login'))
+    bus.on('Signup-open', () => mountModal('signup'))
     screenSize()
     scrollPosition()
     const scroll = computed(() => {
       return store.getters.getScroll
     })
-    return { screenWidth, scroll }
+    const loading = computed(() => {
+      return store.getters.getLoading
+    })
+    return { screenWidth, scroll, modalComponent, loading }
   }
 })
 </script>

@@ -1,14 +1,11 @@
 <template>
-  <button type="button" class="btn custom-btn shadow rounded-0 border-3">{{text}}</button>
+  <button type="button" class="btn custom-btn shadow rounded-0 border-3">
+    <slot></slot>
+  </button>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
-  props: {
-    text: {
-      type: String
-    }
-  }
 })
 </script>
 

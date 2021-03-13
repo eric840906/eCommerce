@@ -1,5 +1,14 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <Loading></Loading>
   </div>
 </template>
+
+<script>
+import Loading from '@/components/loading.vue'
+export default {
+  component: {
+    Loading
+  }
+}
+</script>

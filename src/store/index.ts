@@ -6,7 +6,9 @@ export interface StoreProps {
 export default createStore({
   state: {
     screenSize: 0,
-    scrollY: 0
+    scrollY: 0,
+    loading: false,
+    user: ''
   },
   mutations: {
     screenChanger (state, size) {
@@ -14,6 +16,9 @@ export default createStore({
     },
     scrollChanger (state, scroll) {
       state.scrollY = scroll
+    },
+    loadingChanger (state) {
+      state.loading = !state.loading
     }
   },
   actions: {
@@ -22,6 +27,9 @@ export default createStore({
     },
     scrollTracker ({ commit }, scroll) {
       commit('scrollChanger', scroll)
+    },
+    loading ({ commit }) {
+      commit('loadingChanger')
     }
   },
   getters: {
@@ -30,6 +38,9 @@ export default createStore({
     },
     getScroll (state) {
       return state.scrollY
+    },
+    getLoading (state) {
+      return state.loading
     }
   },
   modules: {

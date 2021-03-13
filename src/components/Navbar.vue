@@ -19,10 +19,10 @@
           <a class="navbar-brand col" href="#"><Logo :width="60"></Logo></a>
           <div class="button-group col justify-content-end">
             <div>
-              <Button :text="'Log in'"></Button>
+              <Button @click="openLogin">Log in</Button>
             </div>
             <div>
-              <Button :text="'Sign up'"></Button>
+              <Button @click="openSignup">Sign up</Button>
             </div>
           </div>
         </div>
@@ -64,6 +64,7 @@
 </template>
 
 <script lang="ts">
+import bus from '@/plugins/bus'
 import { defineComponent, ref } from 'vue'
 import Logo from '@/components/logo.vue'
 import Button from '@/components/btn.vue'
@@ -87,9 +88,17 @@ export default defineComponent({
     const toggleNav = () => {
       navbarStatus.value = !navbarStatus.value
     }
+    const openLogin = () => {
+      bus.emit('Login-open')
+    }
+    const openSignup = () => {
+      bus.emit('Signup-open')
+    }
     return {
       navbarStatus,
-      toggleNav
+      toggleNav,
+      openLogin,
+      openSignup
     }
   }
 })
