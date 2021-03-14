@@ -19,10 +19,11 @@
           <a class="navbar-brand col" href="#"><Logo :width="60"></Logo></a>
           <div class="button-group col justify-content-end">
             <div>
-              <Button @click="openLogin">Log in</Button>
+              <Button @click="openLogout" v-show="userLog">Log out</Button>
+              <Button @click="openLogin" v-show="!userLog">Log in</Button>
             </div>
             <div>
-              <Button @click="openSignup">Sign up</Button>
+              <Button @click="openSignup" v-show="!userLog">Sign up</Button>
             </div>
           </div>
         </div>
@@ -50,10 +51,10 @@
                 <router-link class="text-decoration-none text-nav-link" to="/recipe">Recipes</router-link>
               </li>
               <li v-if="screenSize < 993" class="nav-item">
-                <Button :text="'Log in'"></Button>
+                <Button @click="openLogin">Log in</Button>
               </li>
               <li v-if="screenSize < 993" class="nav-item">
-                <Button :text="'Sign up'"></Button>
+                <Button @click="openSignup">Sign up</Button>
               </li>
             </ul>
           </div>
@@ -65,7 +66,8 @@
 
 <script lang="ts">
 import bus from '@/plugins/bus'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+import { useStore } from 'vuex'
 import Logo from '@/components/logo.vue'
 import Button from '@/components/btn.vue'
 export default defineComponent({
@@ -84,7 +86,11 @@ export default defineComponent({
     }
   },
   setup () {
+    const store = useStore()
     const navbarStatus = ref(false)
+    const userLog = computed(() => {
+      return store.getters.getUser
+    })
     const toggleNav = () => {
       navbarStatus.value = !navbarStatus.value
     }
@@ -94,11 +100,16 @@ export default defineComponent({
     const openSignup = () => {
       bus.emit('Signup-open')
     }
+    const openLogout = () => {
+      bus.emit('Logout-open')
+    }
     return {
       navbarStatus,
       toggleNav,
       openLogin,
-      openSignup
+      openSignup,
+      userLog,
+      openLogout
     }
   }
 })

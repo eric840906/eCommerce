@@ -61,7 +61,6 @@ export default defineComponent({
       border: none;
       background-color: #ffffff21;
       backdrop-filter: blur(3px);
-      height: 500px;
       width: 300px;
     }
   }

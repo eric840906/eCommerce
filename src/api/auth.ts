@@ -21,3 +21,13 @@ export const logIn = (data: UserInfo) => user.request({
   withCredentials: true,
   data
 })
+export const check = () => user.request({
+  url: '/me',
+  method: 'GET',
+  withCredentials: true
+})
+export const logOut = () => user.request({
+  url: '/logout',
+  method: 'GET',
+  withCredentials: true
+})

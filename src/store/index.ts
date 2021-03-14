@@ -1,5 +1,5 @@
 import { createStore, createLogger } from 'vuex'
-import { userLogin } from '@/api'
+import { userLogin, userCheck, userLogout } from '@/api'
 import { useToast } from 'vue-toastification'
 import bus from '@/plugins/bus'
 const toast = useToast()
@@ -47,8 +47,36 @@ export default createStore({
           bus.emit('modal-close')
         }
       } catch (error) {
-        console.log(error)
-        toast.error(error.response.message)
+        toast.error(error.response.data.message)
+        commit('loadingChanger')
+      }
+    },
+    async Check ({ commit }) {
+      try {
+        commit('loadingChanger')
+        const res = await userCheck()
+        console.log(res)
+        if (res.data.state === 'success') {
+          commit('setUser', res.data.data[0])
+          commit('loadingChanger')
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
+        commit('loadingChanger')
+      }
+    },
+    async logOut ({ commit }) {
+      try {
+        commit('loadingChanger')
+        const res = await userLogout()
+        if (res.data.state === 'success') {
+          toast.success('Logged out successfully, see you next time!')
+          commit('setUser', null)
+          commit('loadingChanger')
+          bus.emit('modal-close')
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
         commit('loadingChanger')
       }
     },
@@ -71,6 +99,9 @@ export default createStore({
     },
     getLoading (state) {
       return state.loading
+    },
+    getUser (state) {
+      return state.user
     }
   },
   modules: {

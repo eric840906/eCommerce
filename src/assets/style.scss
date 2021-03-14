@@ -1,6 +1,7 @@
 $primary: #906c64;
 @import url('https://fonts.googleapis.com/css2?family=Aclonica&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;500;800&display=swap');
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
 .btn-outline-primary{
   &:hover {
     color: white !important;
@@ -156,4 +157,7 @@ $primary: #906c64;
     background-color: #e67878;
   }
 }
-@import 'node_modules/bootstrap/scss/bootstrap.scss';
+
+.form-control {
+  background-color: #ffffff9e;
+}

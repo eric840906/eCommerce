@@ -44,16 +44,6 @@ export default defineComponent({
       try {
         store.dispatch('loading')
         const res = await userSignup(name.value, email.value, password.value, passwordConfirm.value)
-        // const res = await axios({
-        //   url: 'http://127.0.0.1:8000/api/user/signup',
-        //   method: 'POST',
-        //   data: {
-        //     name: name.value,
-        //     email: email.value,
-        //     password: password.value,
-        //     passwordConfirm: passwordConfirm.value
-        //   }
-        // })
         console.log(res)
         if (res.data.state === 'success') {
           bus.emit('modal-close')
@@ -65,11 +55,6 @@ export default defineComponent({
         toast.error(error.response.data.message)
         console.log(error.response)
       }
-      // console.log(`name=${name.value}, email=${email.value}, password=${password.value}, passwordConfirm=${passwordConfirm.value}`)
-      // axios({
-      //   url: 'http://127.0.0.1:8000/api/user/signup',
-      //   method: 'POST'
-      // })
     }
     return {
       signUp,
