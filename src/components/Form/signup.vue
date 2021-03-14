@@ -16,18 +16,22 @@
       <label for="password-confirm" class="form-label">Password Confirm</label>
       <input type="password-confirm" class="form-control" v-model="passwordConfirm">
     </div>
-    <button type="submit" class="btn btn-outline-primary">Sign Up</button>
+    <Button type="submit">Sign Up</Button>
   </form>
 </template>
 
 <script lang="ts">
 import { useToast } from 'vue-toastification'
-import axios from 'axios'
+import { userSignup } from '@/api'
 import { useStore } from 'vuex'
 import { defineComponent, ref } from 'vue'
 import bus from '@/plugins/bus'
+import Button from '@/components/btn.vue'
 
 export default defineComponent({
+  components: {
+    Button
+  },
   setup () {
     const toast = useToast()
     const store = useStore()
@@ -39,20 +43,21 @@ export default defineComponent({
     const signUp = async () => {
       try {
         store.dispatch('loading')
-        const res = await axios({
-          url: 'http://127.0.0.1:8000/api/user/signup',
-          method: 'POST',
-          data: {
-            name: name.value,
-            email: email.value,
-            password: password.value,
-            passwordConfirm: passwordConfirm.value
-          }
-        })
+        const res = await userSignup(name.value, email.value, password.value, passwordConfirm.value)
+        // const res = await axios({
+        //   url: 'http://127.0.0.1:8000/api/user/signup',
+        //   method: 'POST',
+        //   data: {
+        //     name: name.value,
+        //     email: email.value,
+        //     password: password.value,
+        //     passwordConfirm: passwordConfirm.value
+        //   }
+        // })
         console.log(res)
         if (res.data.state === 'success') {
           bus.emit('modal-close')
-          toast.success('Welcome!')
+          toast.success('Sign up successfully!')
           store.dispatch('loading')
         }
       } catch (error) {

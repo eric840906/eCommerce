@@ -48,6 +48,7 @@ export default defineComponent({
     transition: all 0.3s ease;
   }
   .modal {
+    font-weight: bold;
     background-color: #0000004a;
     display: flex;
     justify-content: center;
@@ -55,6 +56,11 @@ export default defineComponent({
       margin: 0;
     }
     .modal-content {
+      color: #ededed;
+      box-shadow: 0px 1px 5px black;
+      border: none;
+      background-color: #ffffff21;
+      backdrop-filter: blur(3px);
       height: 500px;
       width: 300px;
     }
