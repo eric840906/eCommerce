@@ -23,7 +23,7 @@
   </div>
   <Footer></Footer>
   <transition name="bounce">
-    <UserLink v-if="userLog"></UserLink>
+    <UserLink v-if="userLog" @click="goAccount"></UserLink>
   </transition>
 </template>
 <script lang="ts">
@@ -31,6 +31,7 @@ import { screenSize } from '@/hook/screenSize'
 import { scrollPosition } from '@/hook/scrollTop'
 import Banner from '@/components/banner.vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { defineComponent, computed, ref } from 'vue'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/footer.vue'
@@ -49,6 +50,7 @@ export default defineComponent({
   },
   setup () {
     const store = useStore()
+    const router = useRouter()
     store.dispatch('Check')
     const modalComponent = ref('')
     const screenWidth = computed(() => {
@@ -62,6 +64,9 @@ export default defineComponent({
     bus.on('Login-open', () => mountModal('login'))
     bus.on('Signup-open', () => mountModal('signup'))
     bus.on('Logout-open', () => mountModal('logout'))
+    const goAccount = () => {
+      router.push('/account')
+    }
     screenSize()
     scrollPosition()
     const userLog = computed(() => {
@@ -73,7 +78,7 @@ export default defineComponent({
     const loading = computed(() => {
       return store.getters.getLoading
     })
-    return { screenWidth, scroll, modalComponent, loading, userLog }
+    return { screenWidth, scroll, modalComponent, loading, userLog, goAccount }
   }
 })
 </script>
