@@ -34,6 +34,25 @@ a {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
+//scroll
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #00000012;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4d32207a;
+  border-radius: 100px;
+}
+
+
+//animation
+
 .breeding-rhombus-spinner, .breeding-rhombus-spinner * {
   box-sizing: border-box;
 }
