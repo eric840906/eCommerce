@@ -61,7 +61,6 @@ export default createStore({
           commit('loadingChanger')
         }
       } catch (error) {
-        toast.error(error.response.data.message)
         commit('loadingChanger')
       }
     },

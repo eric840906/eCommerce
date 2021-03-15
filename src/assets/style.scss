@@ -7,6 +7,15 @@ $primary: #906c64;
     color: white !important;
   }
 }
+a {
+  text-decoration: none;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.ml-2 {
+  margin-left: 0.5rem;
+}
 .text-nav-link {
   color: black;
 }
@@ -160,4 +169,11 @@ $primary: #906c64;
 
 .form-control {
   background-color: #ffffff9e;
+}
+
+.dashboard-morph {
+  background: #ffffff3b;
+  backdrop-filter: blur(3px);
+  box-shadow: 0px 0px 4px black;
+  border-radius: 5px;
 }

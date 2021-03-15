@@ -12,17 +12,6 @@
         <div class="rhombus child-8"></div>
         <div class="rhombus big"></div>
       </div>
-      <!-- <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-uppercase">
-            <slot name="header">
-            </slot>
-          </h5>
-        </div>
-        <div class="modal-body">
-          <slot></slot>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
