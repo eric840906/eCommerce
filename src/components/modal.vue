@@ -58,10 +58,10 @@ export default defineComponent({
       margin: 0;
     }
     .modal-content {
-      color: #ededed;
+      color: #351212;
       box-shadow: 0px 1px 5px black;
       border: none;
-      background-color: #ffffff21;
+      background-color: #ffffff61;
       backdrop-filter: blur(3px);
       width: 300px;
     }

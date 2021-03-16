@@ -1,5 +1,4 @@
 <template>
-  <Button @click="openLogout">Log out</Button>
   <div class="dashboard p-5">
     <h1>DASHBOARD</h1>
     <div class="container">
@@ -39,6 +38,18 @@
                   </div>
                 </router-link>
               </li>
+              <li class="drawer-item">
+                <a href="#" class="d-flex" @click.prevent="openLogout">
+                  <div class="col-2">
+                    <span class="nav-icon p-2"
+                      ><fa icon="sign-out-alt" type="fas" class="contact-icon"></fa
+                    ></span>
+                  </div>
+                  <div class="col-10">
+                    <span class="title p-2">Log out</span>
+                  </div>
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -59,19 +70,24 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
-import Button from '@/components/btn.vue'
 import UserLink from '@/components/User/userLink.vue'
+import bus from '@/plugins/bus'
 export default defineComponent({
   components: {
-    UserLink,
-    Button
+    UserLink
   },
   setup () {
+    const openLogout = () => {
+      bus.emit('Logout-open')
+    }
     const router = useRouter()
     const goFront = () => {
       router.push('/')
     }
-    return { goFront }
+    return {
+      goFront,
+      openLogout
+    }
   }
 })
 </script>
@@ -95,6 +111,7 @@ export default defineComponent({
       transition: all 0.5s ease;
     }
   }
+
 }
 .account-icon {
   width: 20px;

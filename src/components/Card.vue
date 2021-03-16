@@ -5,7 +5,7 @@
       <div class="card-body d-flex flex-column">
         <h5 class="card-title text-capitalize fw-bolder">{{card.title}}</h5>
         <p class="card-text">{{card.article}}</p>
-        <Button class="ml-auto" style="margin-top: auto;" type="submit">Edit this post</Button>
+        <Button class="ml-auto" style="margin-top: auto;" type="submit" @click="editPost(card._id)">Edit this post</Button>
       </div>
     </div>
   </div>
@@ -18,7 +18,7 @@ export interface CardProps {
   title: string;
   photo: string;
   article: string;
-}
+};
 export default defineComponent({
   components: {
     Button
@@ -27,6 +27,14 @@ export default defineComponent({
     card: {
       type: Object as PropType<CardProps[]>,
       required: true
+    }
+  },
+  setup () {
+    const editPost = (id) => {
+      console.log(id)
+    }
+    return {
+      editPost
     }
   }
 })
