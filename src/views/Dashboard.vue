@@ -43,7 +43,11 @@
         </div>
         <div class="col-10">
           <div class="container">
-            <router-view></router-view>
+            <router-view v-slot="{ Component }">
+              <keep-alive>
+                <component :is="Component" :key="$route.fullPath"></component>
+              </keep-alive>
+            </router-view>
           </div>
         </div>
       </div>

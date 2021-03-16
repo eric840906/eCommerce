@@ -3,46 +3,44 @@
     <div class="d-flex p-3 m-2 dashboard-morph user-row">
       <div class="col d-flex align-items-center text-start flex-column w-100">
         <div class="title w-100 d-flex">
-          <h5>Recent Posts</h5>
+          <h5 class="fw-bolder text-uppercase">Recent Posts</h5>
           <Button class="ml-auto">Show all</Button>
         </div>
         <div class="posts-container d-flex overflow-auto w-100 py-3">
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
+          <p v-if="recentPosts.data.length === 0" class="text-uppercase m-auto">Currently nothing here</p>
+          <template v-for="item in recentPosts.data" :key="item._id">
+            <Card :card="item"></Card>
+          </template>
         </div>
       </div>
     </div>
     <div class="d-flex">
       <div class="col text-start">
-        <form class="p-3 m-2 dashboard-morph">
+        <form class="p-3 m-2 dashboard-morph" @submit.prevent="newPost">
           <div class="title w-100 d-flex">
-            <h5>Make new post</h5>
+            <h5 class="fw-bolder text-uppercase">Make new post</h5>
           </div>
           <div class="form-group">
             <label for="post-title">Post title</label>
             <input
               class="form-control"
               id="post-title"
-              v-model="title"
+              v-model="postData.title"
             />
           </div>
           <div class="form-group">
-            <label for="user-desc">User Description</label>
+            <label for="user-desc">Article</label>
             <textarea
               class="form-control"
               id="user-desc"
-              v-model="description"
+              v-model="postData.article"
             />
             <small id="nameHelp" class="form-text text-muted"
               >Enter some words to introduce yourself</small
             >
           </div>
           <div class="form-group my-2">
-            <Button><label for="photo">Upload image</label></Button>
+            <Button><label for="photo">Upload cover image</label></Button>
             <input
               type="file"
               class="form-control"
@@ -53,8 +51,23 @@
             />
           </div>
           <div class="form-group">
-            <img v-if="imageThumb" :src="imageThumb" alt="">
+            <img style="max-height: 300px;" v-if="imageThumb" :src="imageThumb" alt="">
           </div>
+          <div class="form-group my-2">
+            <Button @click="otherShow = !otherShow">Upload other images</Button>
+          </div>
+          <transition name="top-show">
+            <form class="form-group my-2" v-show="otherShow" @submit.prevent="uploadOthers">
+              <input class="custom-file-input" type="file" name="image0" id="image0" @change="putImage($event, 0)">
+              <input class="custom-file-input" type="file" name="image1" id="image1" @change="putImage($event, 1)">
+              <input class="custom-file-input" type="file" name="image2" id="image2" @change="putImage($event, 2)">
+              <input class="custom-file-input" type="file" name="image3" id="image3" @change="putImage($event, 3)">
+              <input class="custom-file-input" type="file" name="image4" id="image4" @change="putImage($event, 4)">
+              <div class="form-group my-2">
+                <Button class="ml-auto" type="submit">Upload them all</Button>
+              </div>
+            </form>
+          </transition>
           <!-- <div class="form-group">
             <label for="user-image"
               >Select a new profile pic</label
@@ -66,7 +79,7 @@
             />
           </div> -->
           <div class="form-group d-flex">
-            <Button class="ml-auto" type="submit">Change info</Button>
+            <Button class="ml-auto" type="submit">Make a new post</Button>
           </div>
         </form>
       </div>
@@ -74,14 +87,16 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import { imageUpload } from '@/api'
 import { useStore } from 'vuex'
+import axios from 'axios'
 import Button from '@/components/btn.vue'
 import Card from '@/components/Card.vue'
 import { useToast } from 'vue-toastification'
 
 export default defineComponent({
+  name: 'Post',
   components: {
     Button,
     Card
@@ -89,11 +104,21 @@ export default defineComponent({
   setup () {
     const store = useStore()
     const toast = useToast()
+    const postData = reactive({
+      title: '',
+      article: '',
+      photo: ''
+    })
+    const otherImages = reactive({ images: [] })
+    const recentPosts = reactive({ data: {} })
     const imageName = ref('')
     const imageThumb = ref('')
-    const imageLink = ref('')
-    const title = ref('')
-    const description = ref('')
+    const otherShow = ref(false)
+    const putImage = (e, index) => {
+      otherImages.images.length = 5
+      otherImages.images[index] = e.target.files[0]
+      console.log(otherImages.images)
+    }
     const uploadToImgur = async (e: FileReader) => {
       try {
         store.dispatch('loading')
@@ -108,22 +133,90 @@ export default defineComponent({
         console.log(data)
         if (data.status === 200) {
           toast.success('image uploaded successfully')
-          imageLink.value = data.data.link
+          postData.photo = data.data.link
           store.dispatch('loading')
         }
       } catch (error) {
         console.log(error)
-        toast.success('IPPS! something wrong during the process')
+        toast.error('OPPS! something wrong during the process')
         store.dispatch('loading')
       }
     }
+    const uploadOthers = async () => {
+      try {
+        toast.info('Start uploading, it might take some time')
+        otherImages.images = otherImages.images.filter(item => item !== undefined)
+        const imgArr = await Promise.all(otherImages.images.map(image => {
+          const form = new FormData()
+          form.append('image', image)
+          return imageUpload(form)
+        }))
+        if (imgArr[imgArr.length - 1].status === 200) {
+          toast.success(`${imgArr.length} images uploaded successfully`)
+          otherImages.images.length = 0
+        }
+        console.log(imgArr.map(img => img.data.data.link))
+      } catch (error) {
+        console.log(error)
+        toast.error('OPPS! something wrong during the process')
+      }
+    }
+    const getPosts = async () => {
+      try {
+        store.dispatch('loading')
+        const res = await axios({
+          url: 'http://127.0.0.1:8000/api/post/recent',
+          method: 'GET',
+          withCredentials: true
+        })
+        recentPosts.data = res.data.data
+        if (res.data.state === 'success') {
+          store.dispatch('loading')
+        }
+      } catch (error) {
+        toast.error('error')
+        store.dispatch('loading')
+      }
+    }
+    const newPost = async () => {
+      console.log(postData)
+      try {
+        store.dispatch('loading')
+        const res = await axios({
+          url: 'http://127.0.0.1:8000/api/post',
+          method: 'POST',
+          withCredentials: true,
+          data: postData
+        })
+        if (res.status === 201) {
+          await toast.success('New article posted')
+          store.dispatch('loading')
+          postData.title = ''
+          postData.article = ''
+          postData.photo = ''
+          imageThumb.value = ''
+          getPosts()
+        }
+      } catch (error) {
+        console.log(error.response.data.message)
+        store.dispatch('loading')
+        toast.error('An error occurred while posting')
+      }
+    }
+    getPosts()
     return {
       uploadToImgur,
       imageName,
       imageThumb,
-      imageLink,
-      title,
-      description
+      postData,
+      newPost,
+      recentPosts,
+      otherShow,
+      uploadOthers,
+      otherImages,
+      putImage
+      // title,
+      // description
     }
   }
 })
@@ -191,5 +284,16 @@ export default defineComponent({
 
 .user-info {
   padding-left: 1rem;
+}
+.top-show-enter-from, .top-show-leave-to {
+  transform: scaleY(0);
+  opacity: 0;
+}
+.top-show-enter-to, .top-show-leave-from {
+  transform: scaleY(1);
+  opacity: 1;
+}
+.top-show-enter-active, .top-show-leave-active {
+  transition: all 0.5s ease;
 }
 </style>
