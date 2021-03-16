@@ -30,7 +30,7 @@ export default defineComponent({
     }
   },
   setup () {
-    const editPost = (id) => {
+    const editPost = (id: string) => {
       console.log(id)
     }
     return {

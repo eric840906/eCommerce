@@ -94,7 +94,15 @@ import axios from 'axios'
 import Button from '@/components/btn.vue'
 import Card from '@/components/Card.vue'
 import { useToast } from 'vue-toastification'
-
+interface HTMLInputEvent extends Event {
+    target: HTMLInputElement & EventTarget;
+}
+interface Post {
+  title: string;
+  article: string;
+  photo: string;
+  images: string[];
+}
 export default defineComponent({
   name: 'Post',
   components: {
@@ -104,29 +112,31 @@ export default defineComponent({
   setup () {
     const store = useStore()
     const toast = useToast()
-    const postData = reactive({
+    const postData = reactive<Post>({
       title: '',
       article: '',
       photo: '',
       images: []
     })
-    const otherImages = reactive({ images: [] })
+    const otherImages = reactive({ images: [] as File[] })
     const recentPosts = reactive({ data: {} })
     const imageName = ref('')
     const imageThumb = ref('')
     const otherShow = ref(false)
-    const putImage = (e, index) => {
+    const putImage = (e: HTMLInputEvent, index: number) => {
+      if (!e.target.files) return
       otherImages.images.length = 5
       otherImages.images[index] = e.target.files[0]
       console.log(otherImages.images)
     }
-    const uploadToImgur = async (e: FileReader) => {
+    const uploadToImgur = async (e: HTMLInputEvent) => {
       try {
+        if (!e.target.files) return
         console.log(e.target.files)
-        const file = e.target.files[0]
+        const file: File = e.target.files[0]
         imageName.value = file.name
         imageThumb.value = window.URL.createObjectURL(file)
-        const form = new FormData()
+        const form: FormData = new FormData()
         form.append('title', imageName.value)
         form.append('image', file)
         const { data } = await imageUpload(form)

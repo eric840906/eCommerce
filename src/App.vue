@@ -29,6 +29,7 @@ export default defineComponent({
     Progrssbar
   },
   setup () {
+    console.log(process.env)
     const store = useStore()
     store.dispatch('Check')
     const modalComponent = ref('')

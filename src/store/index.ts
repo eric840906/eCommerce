@@ -1,15 +1,17 @@
 import { createStore, createLogger } from 'vuex'
 import { userLogin, userCheck, userLogout } from '@/api'
 import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
 import bus from '@/plugins/bus'
 const toast = useToast()
+const router = useRouter()
 export interface StoreProps {
   screenSize: number;
   scrollY: number;
 }
 export interface UserInfo {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
 export default createStore({
   state: {
@@ -73,11 +75,15 @@ export default createStore({
           commit('setUser', null)
           commit('loadingChanger')
           bus.emit('modal-close')
+          router.push({ path: '/' })
         }
       } catch (error) {
         toast.error(error.response.data.message)
         commit('loadingChanger')
       }
+    },
+    async setUser ({ commit }, userInfo) {
+      commit('setUser', userInfo)
     },
     screenTracker ({ commit }, size) {
       commit('screenChanger', size)

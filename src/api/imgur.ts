@@ -16,6 +16,6 @@ export const uploadImage = (image: FormData) => axios({
     // maybe dispatch an action that will update a progress bar or something
   },
   headers: {
-    Authorization: 'Client-ID b3c0d5a76b76d4e'
+    Authorization: `Client-ID ${process.env.VUE_APP_IMGUR_ID}`
   }
 })

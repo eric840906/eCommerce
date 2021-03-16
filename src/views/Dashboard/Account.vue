@@ -39,7 +39,7 @@
     </div>
     <div class="d-flex">
       <div class="col-6 text-start">
-        <form class="p-3 m-2 dashboard-morph">
+        <form class="p-3 m-2 dashboard-morph" @submit.prevent="updateUserInfo">
           <div class="form-group">
             <label for="user-name">User Name</label>
             <input
@@ -85,12 +85,24 @@
             />
           </div> -->
           <div class="form-group d-flex">
-            <Button class="ml-auto" type="submit">Change info</Button>
+            <Button class="ml-auto" type="submit" >Change info</Button>
           </div>
         </form>
       </div>
       <div class="col-6 text-start">
-        <form class="p-3 m-2 dashboard-morph">
+        <form class="p-3 m-2 dashboard-morph" @submit.prevent="passwordUpdate">
+          <div class="form-group">
+            <label for="user-password">Old password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="user-password"
+              v-model="oldPass"
+            />
+            <small id="nameHelp" class="form-text text-muted"
+              >Enter and submit to change your password</small
+            >
+          </div>
           <div class="form-group">
             <label for="user-password">Password</label>
             <input
@@ -127,28 +139,89 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
+import { userUpdate, userPassUpdate } from '@/api'
+import { useToast } from 'vue-toastification'
+import { UserInfo } from '@/store/index'
 import Button from '@/components/btn.vue'
+interface User extends UserInfo {
+  name?: string;
+  email?: string;
+  description?: string;
+  password?: string;
+}
+export interface PasswordForm {
+  oldpass: string;
+  newpass: string;
+  passwordConfirm: string;
+}
 export default defineComponent({
   components: {
     Button
   },
   setup () {
     const store = useStore()
+    const toast = useToast()
     const name = ref('')
     const email = ref('')
     const description = ref('')
     const password = ref('')
     const passwordConfirm = ref('')
+    const oldPass = ref('')
+    const updateUserInfo = async () => {
+      const removeEmpty = (obj: User) => {
+        return Object.fromEntries(Object.entries(obj).filter((key) => key[1]))
+      }
+      const infoObj: User = {
+        name: name.value,
+        email: email.value,
+        description: description.value
+      }
+      const finalObj: User = removeEmpty(infoObj)
+      try {
+        toast.info('Updating new info')
+        const res = await userUpdate(finalObj)
+        console.log(res)
+        if (res.status === 200) {
+          store.dispatch('setUser', res.data.data.user)
+          toast.success('Info updated')
+        }
+      } catch (error) {
+        console.log(error.response.data.message)
+        toast.error(error.response.data.message)
+      }
+    }
+    const passwordUpdate = async () => {
+      try {
+        const updateInfo: PasswordForm = {
+          oldpass: oldPass.value,
+          newpass: password.value,
+          passwordConfirm: passwordConfirm.value
+        }
+        const res = await userPassUpdate(updateInfo)
+        console.log(res)
+        if (res.status === 200) {
+          toast.success('Password changed')
+          password.value = ''
+          passwordConfirm.value = ''
+          oldPass.value = ''
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }
+    }
     const user = computed(() => {
       return store.getters.getUser
     })
     return {
       user,
+      passwordUpdate,
       name,
       email,
       description,
       password,
-      passwordConfirm
+      passwordConfirm,
+      updateUserInfo,
+      oldPass
     }
   }
 })
