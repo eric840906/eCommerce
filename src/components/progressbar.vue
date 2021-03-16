@@ -11,7 +11,6 @@ export default defineComponent({
   setup () {
     const currentProgress = ref(0)
     bus.on('progress', (progress) => {
-      console.log('progress=' + progress)
       currentProgress.value = progress
     })
     bus.on('image-complete', (reset) => {

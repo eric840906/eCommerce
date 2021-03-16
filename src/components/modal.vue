@@ -31,6 +31,7 @@ export default defineComponent({
     bus.on('Login-open', modalToggle)
     bus.on('Signup-open', modalToggle)
     bus.on('Logout-open', modalToggle)
+    bus.on('Cropper-open', modalToggle)
     bus.on('modal-close', () => {
       modalShow.value = false
     })

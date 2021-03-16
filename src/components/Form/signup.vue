@@ -44,7 +44,6 @@ export default defineComponent({
       try {
         store.dispatch('loading')
         const res = await userSignup(name.value, email.value, password.value, passwordConfirm.value)
-        console.log(res)
         if (res.data.state === 'success') {
           bus.emit('modal-close')
           toast.success('Sign up successfully!')
@@ -53,7 +52,6 @@ export default defineComponent({
       } catch (error) {
         store.dispatch('loading')
         toast.error(error.response.data.message)
-        console.log(error.response)
       }
     }
     return {

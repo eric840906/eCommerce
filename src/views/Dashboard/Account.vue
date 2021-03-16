@@ -8,10 +8,10 @@
         <div class="image-block">
           <img
             class="user-image"
-            src="https://i.pinimg.com/564x/c4/0d/7a/c40d7a7060fb74926c257db982b6ddaf.jpg"
+            :src="`${user.photo ? user.photo : 'https://i.pinimg.com/564x/c4/0d/7a/c40d7a7060fb74926c257db982b6ddaf.jpg'}`"
             alt=""
           />
-          <a class="image-btn"><fa icon="camera" type="fas" class="camera-icon"></fa></a>
+          <a href="#" class="image-btn" @click.prevent="cropperOpen"><fa icon="camera" type="fas" class="camera-icon"></fa></a>
         </div>
         <ul class="w-100 mt-3">
           <li class="d-flex w-100">
@@ -74,16 +74,6 @@
               >Enter some words to introduce yourself</small
             >
           </div>
-          <!-- <div class="form-group">
-            <label for="user-image"
-              >Select a new profile pic</label
-            >
-            <input
-              type="file"
-              class="form-control-file display-none"
-              id="exampleFormControlFile1"
-            />
-          </div> -->
           <div class="form-group d-flex">
             <Button class="ml-auto" type="submit" >Change info</Button>
           </div>
@@ -142,6 +132,7 @@ import { useStore } from 'vuex'
 import { userUpdate, userPassUpdate } from '@/api'
 import { useToast } from 'vue-toastification'
 import { UserInfo } from '@/store/index'
+import bus from '@/plugins/bus'
 import Button from '@/components/btn.vue'
 interface User extends UserInfo {
   name?: string;
@@ -180,13 +171,11 @@ export default defineComponent({
       try {
         toast.info('Updating new info')
         const res = await userUpdate(finalObj)
-        console.log(res)
         if (res.status === 200) {
           store.dispatch('setUser', res.data.data.user)
           toast.success('Info updated')
         }
       } catch (error) {
-        console.log(error.response.data.message)
         toast.error(error.response.data.message)
       }
     }
@@ -198,7 +187,6 @@ export default defineComponent({
           passwordConfirm: passwordConfirm.value
         }
         const res = await userPassUpdate(updateInfo)
-        console.log(res)
         if (res.status === 200) {
           toast.success('Password changed')
           password.value = ''
@@ -208,6 +196,9 @@ export default defineComponent({
       } catch (error) {
         toast.error(error.response.data.message)
       }
+    }
+    const cropperOpen = () => {
+      bus.emit('Cropper-open')
     }
     const user = computed(() => {
       return store.getters.getUser
@@ -221,7 +212,8 @@ export default defineComponent({
       password,
       passwordConfirm,
       updateUserInfo,
-      oldPass
+      oldPass,
+      cropperOpen
     }
   }
 })

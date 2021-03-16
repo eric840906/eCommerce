@@ -127,12 +127,10 @@ export default defineComponent({
       if (!e.target.files) return
       otherImages.images.length = 5
       otherImages.images[index] = e.target.files[0]
-      console.log(otherImages.images)
     }
     const uploadToImgur = async (e: HTMLInputEvent) => {
       try {
         if (!e.target.files) return
-        console.log(e.target.files)
         const file: File = e.target.files[0]
         imageName.value = file.name
         imageThumb.value = window.URL.createObjectURL(file)
@@ -140,13 +138,11 @@ export default defineComponent({
         form.append('title', imageName.value)
         form.append('image', file)
         const { data } = await imageUpload(form)
-        console.log(data)
         if (data.status === 200) {
           toast.success('image uploaded successfully')
           postData.photo = data.data.link
         }
       } catch (error) {
-        console.log(error)
         toast.error('OPPS! something wrong during the process')
       }
     }
@@ -165,7 +161,6 @@ export default defineComponent({
         }
         postData.images = imgArr.map(img => img.data.data.link)
       } catch (error) {
-        console.log(error)
         toast.error('OPPS! something wrong during the process')
       }
     }
@@ -187,7 +182,6 @@ export default defineComponent({
       }
     }
     const newPost = async () => {
-      console.log(postData)
       try {
         store.dispatch('loading')
         const res = await axios({
@@ -206,7 +200,6 @@ export default defineComponent({
           getPosts()
         }
       } catch (error) {
-        console.log(error.response.data.message)
         store.dispatch('loading')
         toast.error('An error occurred while posting')
       }

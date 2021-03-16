@@ -25,7 +25,6 @@ export default defineComponent({
     const password = ref('')
     const store = useStore()
     const login = () => {
-      console.log(email.value, password.value)
       const userInfo = {
         email: email.value,
         password: password.value
