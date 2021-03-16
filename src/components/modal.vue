@@ -28,7 +28,9 @@ export default defineComponent({
     const modalToggle = () => {
       modalShow.value = !modalShow.value
     }
-    bus.on('*', modalToggle)
+    bus.on('Login-open', modalToggle)
+    bus.on('Signup-open', modalToggle)
+    bus.on('Logout-open', modalToggle)
     return {
       modalShow,
       modalToggle

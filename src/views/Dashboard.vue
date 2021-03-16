@@ -1,4 +1,5 @@
 <template>
+  <Button @click="openLogout">Log out</Button>
   <div class="dashboard p-5">
     <h1>DASHBOARD</h1>
     <div class="container">
@@ -58,10 +59,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
+import Button from '@/components/btn.vue'
 import UserLink from '@/components/User/userLink.vue'
 export default defineComponent({
   components: {
-    UserLink
+    UserLink,
+    Button
   },
   setup () {
     const router = useRouter()

@@ -121,7 +121,6 @@ export default defineComponent({
     }
     const uploadToImgur = async (e: FileReader) => {
       try {
-        store.dispatch('loading')
         console.log(e.target.files)
         const file = e.target.files[0]
         imageName.value = file.name
@@ -134,12 +133,10 @@ export default defineComponent({
         if (data.status === 200) {
           toast.success('image uploaded successfully')
           postData.photo = data.data.link
-          store.dispatch('loading')
         }
       } catch (error) {
         console.log(error)
         toast.error('OPPS! something wrong during the process')
-        store.dispatch('loading')
       }
     }
     const uploadOthers = async () => {
