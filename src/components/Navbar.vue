@@ -142,7 +142,7 @@ export default defineComponent({
   backdrop-filter: blur(3px);
   transition: all 0.5s ease;
 }
-.router-link-active {
+.router-link-exact-active {
   color: #906c64;
 }
 .navbar-collapse {

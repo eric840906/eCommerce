@@ -2,7 +2,7 @@ import axios from 'axios'
 import { UserInfo } from '@/store/index'
 import { PasswordForm } from '@/views/Dashboard/Account.vue'
 const user = axios.create({
-  baseURL: `${process.env.VUE_APP_APIPATH}`
+  baseURL: `${process.env.VUE_APP_APIPATH}/user`
   // baseURL: 'http://127.0.0.1:8000/api/user'
 })
 export const signUp = (nameInput: string, emailInput: string, passwordInput: string, passwordConfirmInput: string) => user.request({

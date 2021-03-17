@@ -25,6 +25,7 @@
             :src="imgSrc"
             v-if="imgSrc"
             preview=".preview"
+            dragMode="move"
           />
         </div>
         <div class="actions">

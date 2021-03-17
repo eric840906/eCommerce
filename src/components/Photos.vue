@@ -1,7 +1,6 @@
 <template>
-  <div class="row">
-    <!-- <h1 data-aos="fade-in" class="title-color"></h1> -->
-    <div data-aos="fade-up" data-aos-offset="300" data-aos-once="false" data-aos-easing="ease-in-out" class="col-xl-3 col-lg-4 col-md-6 mb-4 d-flex align-items-center" v-for="item in photoArr" :key="item.id">
+  <div class="d-flex flex-wrap justify-content-center">
+    <div data-aos="fade-up" data-aos-offset="300" data-aos-once="false" data-aos-easing="ease-in-out" class="col-xl-3 col-lg-4 col-md-6 p-2 d-flex align-items-center" v-for="item in photoArr" :key="item.id">
       <div class="photo-container">
         <div class="cover">
           <h1>{{item.title}}</h1>
@@ -91,13 +90,15 @@ export default defineComponent({
 .photo {
   cursor: pointer;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   transition: 1s all ease;
   position: relative;
 }
 .photo-container {
   position: relative;
   overflow: hidden;
+  height: 100%;
   &:hover {
     .photo{
       transform: scale(1.2);

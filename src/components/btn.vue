@@ -17,6 +17,7 @@ export default defineComponent({
     transition: all 0.5s ease-in-out;
     border: 1px solid white;
     color: white;
+    z-index: 3;
     &::after {
       position: absolute;
       content: '';
