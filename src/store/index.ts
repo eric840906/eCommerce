@@ -12,6 +12,9 @@ export interface StoreProps {
 export interface UserInfo {
   email?: string;
   password?: string;
+  name?: string;
+  _id?: string;
+  photo?: string;
 }
 export default createStore({
   state: {
@@ -110,8 +113,8 @@ export default createStore({
     }
   },
   modules: {
-  },
-  plugins: process.env.NODE_ENV !== 'production'
-    ? [createLogger()]
-    : []
+  }
+  // plugins: process.env.NODE_ENV !== 'production'
+  //   ? [createLogger()]
+  //   : []
 })

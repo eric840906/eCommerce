@@ -1,5 +1,5 @@
 <template>
-  <section class="mid-link d-flex flex-column flex-md-row justify-content-md-evenly px-5" data-aos="fade-up" data-aos-offset="300" data-aos-once="false" data-aos-easing="ease-in-out">
+  <section class="mid-link d-flex flex-column flex-md-row justify-content-md-evenly px-5" data-aos="fade-up" data-aos-once="true" data-aos-easing="ease-in-out">
     <div class="row g-3 align-items-center justify-content-center">
       <h5 class="display-5 text-uppercase">Subscribe us</h5>
       <div class="col-auto">
@@ -15,7 +15,7 @@
         <input id="name" class="form-control">
       </div>
       <div class="col-auto">
-        <Button>Make a subscription</Button>
+        <Button @click="subscribe" :disabled="!btnState">Make a subscription</Button>
       </div>
     </div>
   </section>
@@ -23,13 +23,30 @@
 
 <script lang="ts">
 import AOS from 'aos'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import Button from '@/components/btn.vue'
-AOS.init()
+import { useToast } from 'vue-toastification'
+AOS.init({
+  duration: 700,
+  delay: 400,
+  once: true
+})
 
 export default defineComponent({
   components: {
     Button
+  },
+  setup () {
+    const toast = useToast()
+    const btnState = ref(true)
+    const subscribe = () => {
+      toast.info('Comming soon')
+      btnState.value = false
+    }
+    return {
+      btnState,
+      subscribe
+    }
   }
 })
 </script>

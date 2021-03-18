@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@/plugins/font-awesome'
 import login from '@/components/Form/login.vue'
 import signup from '@/components/Form/signup.vue'
 import logout from '@/components/Form/logout.vue'
+import loading from '@/components/singleLoading.vue'
 import cropper from '@/components/Form/updateProfilePic.vue'
 import Toast, { PluginOptions } from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
@@ -16,6 +17,7 @@ app.component('login', login)
 app.component('signup', signup)
 app.component('logout', logout)
 app.component('cropper', cropper)
+app.component('loading', loading)
 app.use(Toast, toastOptions)
 app
   .use(store)

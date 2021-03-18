@@ -1,21 +1,23 @@
 <template>
-  <Navbar :screenSize='screenWidth' :scrollPos="scroll"></Navbar>
-  <Banner></Banner>
   <div>
-    <img class="divider divider-top" src="~@/assets/divider.svg" alt="">
+    <Navbar :screenSize='screenWidth' :scrollPos="scroll"></Navbar>
+    <Banner></Banner>
+    <div>
+      <img class="divider divider-top" src="~@/assets/divider.svg" alt="">
+    </div>
+      <router-view v-slot="{ Component }">
+        <transition name="change">
+          <component :is="Component"></component>
+        </transition>
+      </router-view>
+    <div>
+      <img class="divider divider-bottom" src="~@/assets/divider.svg" alt="">
+    </div>
+    <Footer></Footer>
+    <transition name="bounce">
+      <UserLink v-if="userLog" :linkIcon="'home'" @click="goDashboard"></UserLink>
+    </transition>
   </div>
-    <router-view v-slot="{ Component }">
-      <transition name="change">
-        <component :is="Component"></component>
-      </transition>
-    </router-view>
-  <div>
-    <img class="divider divider-bottom" src="~@/assets/divider.svg" alt="">
-  </div>
-  <Footer></Footer>
-  <transition name="bounce">
-    <UserLink v-if="userLog" :linkIcon="'home'" @click="goDashboard"></UserLink>
-  </transition>
 </template>
 <script lang="ts">
 import Banner from '@/components/banner.vue'

@@ -9,7 +9,11 @@
       </template>
       <component :is="modalComponent"></component>
   </Modal>
-  <router-view></router-view>
+  <router-view v-slot="{ Component }">
+    <transition name="flip" mode="out-in">
+      <component :is="Component"></component>
+    </transition>
+  </router-view>
 </template>
 <script lang="ts">
 import { screenSize } from '@/hook/screenSize'
@@ -69,5 +73,14 @@ export default defineComponent({
   color: #2c3e50;
   background-image: url('~@/assets/background.svg');
   background-color: #efd2c4;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to, .fade-leave-from {
+  opacity: 1;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: all 0.8s ease;
 }
 </style>

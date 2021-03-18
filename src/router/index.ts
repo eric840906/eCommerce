@@ -36,7 +36,25 @@ const routes: Array<RouteRecordRaw> = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Front/Blog.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/Front/Blog.vue'),
+        children: [
+          {
+            path: '',
+            name: 'Postlist',
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: () => import(/* webpackChunkName: "about" */ '../views/Front/Post/postList.vue')
+          },
+          {
+            path: '/:id',
+            name: 'Postpage',
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: () => import(/* webpackChunkName: "about" */ '../views/Front/Post/_id.vue')
+          }
+        ]
       },
       {
         path: '/recipe',

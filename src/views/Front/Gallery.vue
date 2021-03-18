@@ -1,18 +1,20 @@
 <template>
   <div class="Gallery">
     <div class="container">
-      <h1>Gallery</h1>
+      <CategoryHead>Gallery</CategoryHead>
       <Photos></Photos>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Photos from '@/components/Photos.vue'
+import Photos from '@/components/photos3.vue'
+import CategoryHead from '@/components/Title/CategoryHead.vue'
 import { defineComponent } from 'vue'
 export default defineComponent({
   components: {
-    Photos
+    Photos,
+    CategoryHead
   }
 })
 </script>

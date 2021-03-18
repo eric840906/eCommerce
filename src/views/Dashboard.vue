@@ -1,5 +1,6 @@
 <template>
-  <div class="dashboard p-5">
+  <div>
+    <div class="dashboard p-5">
     <h1>DASHBOARD</h1>
     <div class="container">
       <div class="row">
@@ -66,6 +67,7 @@
     </div>
   </div>
   <UserLink :linkIcon="'store'" @click="goFront"></UserLink>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'

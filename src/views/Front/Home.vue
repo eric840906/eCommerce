@@ -9,20 +9,23 @@
     <div class="container mb-5">
       <div class="row flex-column">
         <CategoryHead>What's new</CategoryHead>
-        <Carousel></Carousel>
+        <suspense>
+          <template #default>
+            <Carousel></Carousel>
+          </template>
+          <template #fallback>
+            <loading></loading>
+          </template>
+        </suspense>
       </div>
-      <!-- <ColumnList :list="testData" :scrollPos="scroll"></ColumnList> -->
     </div>
     <Midlink></Midlink>
     <div class="container my-5">
       <div class="row flex-column">
         <CategoryHead>Photos</CategoryHead>
-        <Photos></Photos>
+        <Photos :photos="galleryContent"></Photos>
       </div>
     </div>
-    <!-- <div class="container">
-      <Photo></Photo>
-    </div> -->
   </div>
 </template>
 
@@ -30,44 +33,14 @@
 import { screenSize } from '@/hook/screenSize'
 import { scrollPosition } from '@/hook/scrollTop'
 import { useStore } from 'vuex'
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, onMounted, reactive, ref } from 'vue'
 import { StoreProps } from '@/store/index'
-import Carousel from '@/components/carousel.vue'
+import { getContent } from '@/api'
+import Carousel, { RecentCarousel } from '@/components/carousel.vue'
 import SiteIntro from '@/components/siteIntro.vue'
 import Midlink from '@/components/midlink.vue'
 import CategoryHead from '@/components/Title/CategoryHead.vue'
-import Photos from '@/components/Photos.vue'
-// import ColumnList, { ColumnProps } from '@/components/ColumnList.vue'
-// const testData: ColumnProps[] = [
-//   {
-//     id: 1,
-//     title: 'ASDASD',
-//     avatar: 'https://images.dog.ceo/breeds/elkhound-norwegian/n02091467_872.jpg',
-//     desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ipsam quisquam praesentium doloremque rem fugiat eaque, hic commodi totam distinctio voluptatum iure! Earum cupiditate assumenda nihil possimus totam veniam tenetur.'
-//   },
-//   {
-//     id: 2,
-//     title: 'ASDASD',
-//     avatar: 'https://images.dog.ceo/breeds/terrier-fox/n02095314_663.jpg',
-//     desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ipsam quisquam praesentium doloremque rem fugiat eaque, hic commodi totam distinctio voluptatum iure! Earum cupiditate assumenda nihil possimus totam veniam tenetur.'
-//   },
-//   {
-//     id: 3,
-//     title: 'ASDASD',
-//     avatar: 'https://images.dog.ceo/breeds/terrier-fox/n02095314_663.jpg',
-//     desc: 'asdasd'
-//   },
-//   {
-//     id: 4,
-//     title: 'ASDASD',
-//     desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ipsam quisquam praesentium doloremque rem fugiat eaque, hic commodi totam distinctio voluptatum iure! Earum cupiditate assumenda nihil possimus totam veniam tenetur.'
-//   },
-//   {
-//     id: 5,
-//     title: 'ASDASD',
-//     desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ipsam quisquam praesentium doloremque rem fugiat eaque, hic commodi totam distinctio voluptatum iure! Earum cupiditate assumenda nihil possimus totam veniam tenetur.'
-//   }
-// ]
+import Photos, { Photo } from '@/components/Photos.vue'
 export default defineComponent({
   components: {
     Carousel,
@@ -80,6 +53,8 @@ export default defineComponent({
   },
   setup () {
     const store = useStore<StoreProps>()
+    const page = ref(0)
+    const galleryContent = reactive({ data: [] as Photo[] })
     const screenWidth = computed(() => {
       return store.state.screenSize
     })
@@ -88,10 +63,20 @@ export default defineComponent({
     const scroll = computed(() => {
       return store.state.scrollY
     })
+    onMounted(async () => {
+      const { data } = await getContent(page.value, 10)
+      galleryContent.data = data.data.map((item: RecentCarousel) => {
+        return {
+          title: item.title,
+          id: item.id,
+          images: item.photo
+        }
+      })
+    })
     return {
-    // testData,
       screenWidth,
-      scroll
+      scroll,
+      galleryContent
     }
   }
 })
