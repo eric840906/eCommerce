@@ -1,7 +1,7 @@
 <template>
-  <div class="Recipe">
+  <div class="shop">
     <div class="container">
-      <h1>Recipe</h1>
+      <h1>shop</h1>
     </div>
   </div>
 </template>

@@ -19,11 +19,11 @@
           <a class="navbar-brand col" href="#"><Logo :width="60"></Logo></a>
           <div class="button-group col justify-content-end">
             <div>
-              <Button @click="openLogout" v-show="userLog">Log out</Button>
-              <Button @click="openLogin" v-show="!userLog">Log in</Button>
+              <Button @click="openLogout" v-show="userLog._id">Log out</Button>
+              <Button @click="openLogin" v-show="!userLog._id">Log in</Button>
             </div>
             <div>
-              <Button @click="openSignup" v-show="!userLog">Sign up</Button>
+              <Button @click="openSignup" v-show="!userLog._id">Sign up</Button>
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@
                 <router-link class="text-decoration-none text-nav-link" to="/blog">Blog</router-link>
               </li>
               <li class="nav-item">
-                <router-link class="text-decoration-none text-nav-link" to="/recipe">Recipes</router-link>
+                <router-link class="text-decoration-none text-nav-link" to="/shop">Shop</router-link>
               </li>
               <li v-if="screenSize < 993" class="nav-item">
                 <Button @click="openLogin">Log in</Button>
@@ -142,7 +142,7 @@ export default defineComponent({
   backdrop-filter: blur(3px);
   transition: all 0.5s ease;
 }
-.router-link-exact-active {
+.router-link-active {
   color: #906c64;
 }
 .navbar-collapse {

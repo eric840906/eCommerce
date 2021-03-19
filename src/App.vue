@@ -2,7 +2,7 @@
   <teleport to='body'>
     <Loading :isLoading='loading'></Loading>
   </teleport>
-  <Progrssbar></Progrssbar>
+  <Progressbar></Progressbar>
   <Modal>
       <template v-slot:header>
         <h5>{{modalComponent}}</h5>
@@ -10,7 +10,7 @@
       <component :is="modalComponent"></component>
   </Modal>
   <router-view v-slot="{ Component }">
-    <transition name="flip" mode="out-in">
+    <transition name="fade" mode="out-in">
       <component :is="Component"></component>
     </transition>
   </router-view>
@@ -19,7 +19,7 @@
 import { screenSize } from '@/hook/screenSize'
 import { scrollPosition } from '@/hook/scrollTop'
 import { useStore } from 'vuex'
-import Progrssbar from '@/components/progressbar.vue'
+import Progressbar from '@/components/progressbar.vue'
 import { defineComponent, computed, ref } from 'vue'
 import Modal from '@/components/modal.vue'
 import Loading from '@/components/loading.vue'
@@ -30,7 +30,7 @@ export default defineComponent({
     Modal,
     Loading,
     UserLink,
-    Progrssbar
+    Progressbar
   },
   setup () {
     console.log(process.env)

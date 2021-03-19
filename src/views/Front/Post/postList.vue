@@ -1,5 +1,5 @@
 <template>
-  <div class="col col-md-9 d-flex flex-column flex-md-row flex-md-wrap" ref="scrollComponent">
+  <div ref="scrollComponent">
     <div
       v-for="item in pageContent"
       :key="item.id"
@@ -13,9 +13,9 @@
           >
             Other
           </h6>
-          <h5>{{ item.created.split('T')[0] }}</h5>
+          <h5>{{ new Date(item.created).toLocaleDateString('en-us', { year:'numeric', month: 'long', day: 'numeric' }) }}</h5>
         </div>
-        <h3 class="mt-md-0 mt-3 text-uppercase text-start">{{ item.title }}</h3>
+        <h3 class="mt-md-0 mt-3 text-uppercase text-start text-break">{{ item.title }}</h3>
         <p>{{ item.article }}</p>
         <router-link :to="`blog/${item.id}`">Read more</router-link>
         <div
@@ -30,17 +30,19 @@
       </div>
     </div>
     <div class="mx-auto my-5" v-if="loading">
-      <loading></loading>
-      loading
     </div>
     <div class="m-auto" v-if="!callMore">
       All Posts' been loaded
+    </div>
+    <div v-else>
+      <loading></loading>
+      loading
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, onUnmounted } from 'vue'
+import { defineComponent, onMounted, ref, onUnmounted } from 'vue'
 import { debounce } from '@/plugins/debounce'
 import { getContent } from '@/api'
 import { RecentCarousel } from '@/components/carousel.vue'
@@ -97,15 +99,7 @@ export default defineComponent({
     } catch (error) {
       toast.error(error.response.data.message)
     }
-    const pageList = computed(() => {
-      if (!pageContent) return {}
-      return pageContent.map((item: RecentCarousel) => {
-        item.created = item.created.split('T')[0]
-        return item
-      })
-    })
     return {
-      pageList,
       page,
       loading,
       scrollComponent,

@@ -21,7 +21,7 @@ export default createStore({
     screenSize: 0,
     scrollY: 0,
     loading: false,
-    user: null
+    user: {}
   },
   mutations: {
     screenChanger (state, size) {
@@ -75,7 +75,7 @@ export default createStore({
         const res = await userLogout()
         if (res.data.state === 'success') {
           toast.success('Logged out successfully, see you next time!')
-          commit('setUser', null)
+          commit('setUser', {})
           commit('loadingChanger')
           bus.emit('modal-close')
           router.push({ path: '/' })

@@ -5,7 +5,13 @@
       <div class="row flex-column flex-md-row flex-md-wrap">
         <suspense>
           <template #default>
-            <router-view></router-view>
+            <div class="col col-md-9 d-flex flex-column flex-md-row flex-md-wrap">
+              <router-view v-slot="{ Component }">
+                <transition name="fade" mode="out-in">
+                  <component :is="Component"></component>
+                </transition>
+              </router-view>
+            </div>
           </template>
           <template #fallback>
             <div class="page-loading col d-flex flex-column" style="position: relative;">
@@ -48,24 +54,14 @@
                   <p class="fw-bolder text-uppercase">Lastest posts</p>
                   <div class="d-flex flex-wrap">
                     <ul class="w-100 p-0 newest-list">
-                      <li class="d-flex justify-content-between">
-                        <div class="col-4">
-                          <img class="post-thumbnail" src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=653&q=80" alt="">
-                        </div>
-                        <div class="col-8 d-flex flex-column text-start ps-3 justify-content-around">
-                          <h5 class="post-name"><a href="">野格炸彈我的最愛超爽口感</a></h5>
-                          <p class="post-date">March 18, 2021</p>
-                        </div>
-                      </li>
-                      <li class="d-flex justify-content-between">
-                        <div class="col-4">
-                          <img class="post-thumbnail" src="https://livedemo00.template-help.com/wt_prod-24533/images/post-mini-1-106x104.jpg" alt="">
-                        </div>
-                        <div class="col-8 d-flex flex-column text-start ps-3 justify-content-around">
-                          <h5 class="post-name"><a href="">野格炸彈我的最愛超爽口感</a></h5>
-                          <p class="post-date">March 18, 2021</p>
-                        </div>
-                      </li>
+                      <suspense>
+                        <template #default>
+                          <Newest></Newest>
+                        </template>
+                        <template #fallback>
+                          <loading></loading>
+                        </template>
+                      </suspense>
                     </ul>
                   </div>
                 </div>
@@ -102,10 +98,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import Newest from '@/components/Blog/newest.vue'
 import CategoryHead from '@/components/Title/CategoryHead.vue'
 export default defineComponent({
   components: {
-    CategoryHead
+    CategoryHead,
+    Newest
   }
 })
 </script>
