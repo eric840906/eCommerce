@@ -25,6 +25,10 @@ import Modal from '@/components/modal.vue'
 import Loading from '@/components/loading.vue'
 import UserLink from '@/components/User/userLink.vue'
 import bus from '@/plugins/bus'
+import AOS from 'aos'
+AOS.init({
+  disable: 'phone'
+})
 export default defineComponent({
   components: {
     Modal,

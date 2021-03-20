@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home page-view">
     <div class="container mb-5">
       <div class="row flex-column">
         <CategoryHead>Welcome</CategoryHead>

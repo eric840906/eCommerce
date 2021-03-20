@@ -28,6 +28,16 @@
               v-model="postData.title"
             />
           </div>
+          <div class="form-group my-2 d-flex flex-column">
+            <label>Category</label>
+            <select class="custom-select custom-select-sm" v-model="postData.category">
+              <option selected value="Other">Other</option>
+              <option value="News">News</option>
+              <option value="Cakes">Cakes</option>
+              <option value="Cookies">Cookies</option>
+              <option value="Tips">Tips</option>
+            </select>
+          </div>
           <div class="form-group">
             <label for="user-desc">Article</label>
             <textarea
@@ -101,7 +111,9 @@ interface Post {
   title: string;
   article: string;
   photo: string;
-  images: string[];
+  images?: string[];
+  category: string;
+  _id?: string;
 }
 export default defineComponent({
   name: 'Post',
@@ -116,12 +128,14 @@ export default defineComponent({
       title: '',
       article: '',
       photo: '',
-      images: []
+      images: [],
+      category: ''
     })
     const otherImages = reactive({ images: [] as File[] })
-    const recentPosts = reactive({ data: {} })
+    const recentPosts = reactive({ data: [] as Post[] })
     const imageName = ref('')
     const imageThumb = ref('')
+    const category = ref('')
     const otherShow = ref(false)
     const putImage = (e: HTMLInputEvent, index: number) => {
       if (!e.target.files) return
@@ -215,7 +229,8 @@ export default defineComponent({
       otherShow,
       uploadOthers,
       otherImages,
-      putImage
+      putImage,
+      category
       // title,
       // description
     }

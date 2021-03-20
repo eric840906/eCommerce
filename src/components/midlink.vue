@@ -22,15 +22,9 @@
 </template>
 
 <script lang="ts">
-import AOS from 'aos'
 import { defineComponent, ref } from 'vue'
 import Button from '@/components/btn.vue'
 import { useToast } from 'vue-toastification'
-AOS.init({
-  duration: 700,
-  delay: 400,
-  once: true
-})
 
 export default defineComponent({
   components: {

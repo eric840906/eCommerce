@@ -58,10 +58,8 @@
 </template>
 
 <script lang="ts">
-import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { computed, defineComponent } from 'vue'
-AOS.init()
 export interface Photo {
   id: number;
   url: string;

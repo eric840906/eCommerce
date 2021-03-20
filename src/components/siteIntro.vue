@@ -25,9 +25,7 @@
 </template>
 
 <script lang="ts">
-import AOS from 'aos'
 import { defineComponent } from 'vue'
-AOS.init()
 export default defineComponent({
 })
 </script>

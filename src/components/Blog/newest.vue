@@ -4,7 +4,7 @@
       <img class="post-thumbnail" :src="item.photo" alt="">
     </div>
     <div class="col-8 d-flex flex-column text-start ps-3 justify-content-around">
-      <h5 class="post-name text-capitalize"><router-link :to="`blog/${item.id}`">{{item.title}}</router-link></h5>
+      <h5 class="post-name text-capitalize"><router-link :to="`/blog/default/${item.id}`">{{item.title}}</router-link></h5>
       <p class="post-date">{{item.created}}</p>
     </div>
   </li>
@@ -19,7 +19,7 @@ import { dateFormatter } from '@/plugins/dateFormatter'
 export default defineComponent({
   async setup () {
     let rawContent: RecentCarousel[] = []
-    const res = await getContent(1, 2)
+    const res = await getContent(1, 2, 'default')
     console.log(res)
     rawContent = res.data.data
     const computedContent = computed(() => {

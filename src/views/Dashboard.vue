@@ -84,7 +84,7 @@ export default defineComponent({
     }
     const router = useRouter()
     const goFront = () => {
-      router.go(-1)
+      router.push('/')
     }
     return {
       goFront,

@@ -3,7 +3,7 @@
     position: fixed;
     width: 100%;
     z-index: 999;">
-    <transition name="top-show">
+    <transition name="top-show" mode="in-out">
       <nav :class="['navbar', 'navbar-expand-lg', 'navbar-light']" v-show="scrollPos < 100 && screenSize > 993">
         <div class="fluid-container d-flex w-100 px-5">
           <ul class="contact-info col">
@@ -45,7 +45,7 @@
                 <router-link class="text-decoration-none text-nav-link" to="/gallery">Gallery</router-link>
               </li>
               <li class="nav-item">
-                <router-link class="text-decoration-none text-nav-link" to="/blog">Blog</router-link>
+                <router-link class="text-decoration-none text-nav-link" to="/blog/default">Blog</router-link>
               </li>
               <li class="nav-item">
                 <router-link class="text-decoration-none text-nav-link" to="/shop">Shop</router-link>

@@ -9,7 +9,7 @@
           <div class="h-100 d-flex flex-wrap justify-content-center" :key="carouselContent.data[carouselIndex].id">
             <div class="col-lg-8 col-md-6 col-sm-12 d-flex flex-column text-md-start text-center">
               <h3 class="mt-md-0 mt-3 text-uppercase">{{carouselContent.data[carouselIndex].title}}</h3>
-              <p>{{carouselContent.data[carouselIndex].article}}</p> <router-link class="text-center text-md-end" :to="`/post/${carouselContent.data[carouselIndex].id}`">read more</router-link>
+              <p class="text-overflow-dot">{{carouselContent.data[carouselIndex].article}}</p> <router-link class="text-center text-md-end text-capitalize" :to="`/blog/default/${carouselContent.data[carouselIndex].id}`">read more</router-link>
               <div class="author-info d-none d-md-flex align-self-end mt-auto p-1 mb-3 order-md-last order-first shadow">
                 <img :src="carouselContent.data[carouselIndex].author.photo" alt="">
                 <p class="align-self-center mx-3 mb-0">{{carouselContent.data[carouselIndex].author.name}}</p>
@@ -54,6 +54,7 @@ export interface RecentCarousel {
   slug: string;
   duration?: null;
   id: string;
+  category?: string;
 }
 export default defineComponent({
   async setup () {

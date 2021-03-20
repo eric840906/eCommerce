@@ -1,5 +1,5 @@
 <template>
-  <div class="Gallery">
+  <div class="Gallery page-view">
     <div class="container">
       <CategoryHead>Gallery</CategoryHead>
       <Photos></Photos>

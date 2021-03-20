@@ -6,7 +6,7 @@
       <img class="divider divider-top" src="~@/assets/divider.svg" alt="">
     </div>
       <router-view v-slot="{ Component }">
-        <transition name="change">
+        <transition name="change" mode="out-in">
           <component :is="Component"></component>
         </transition>
       </router-view>

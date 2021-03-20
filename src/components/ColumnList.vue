@@ -14,12 +14,8 @@
   </div>
 </template>
 <script lang="ts">
-import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { PropType, defineComponent, computed, ref } from 'vue'
-AOS.init({
-  disable: 'phone'
-})
 export interface ColumnProps {
   id: number;
   title: string;

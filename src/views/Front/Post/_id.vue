@@ -1,12 +1,12 @@
 <template>
-  <div v-if="pageContent.data" class="d-flex flex-column mb-5 w-100">
+  <div v-if="pageContent.data" class="d-flex flex-column mb-5 w-100 front-morph p-2 p-md-4">
     <div class="col d-flex flex-column text-start">
       <div class="post-info d-flex flex-row align-items-center">
         <h6
           class="me-3 tag px-2 py-1 shadow text-uppercase"
           style="color: white; background: #a8847c;"
         >
-          Other
+          {{pageContent.data.category}}
         </h6>
         <h5>{{ new Date(pageContent.data.created).toLocaleDateString('en-us', { year:'numeric', month: 'long', day: 'numeric' })}}</h5>
       </div>
@@ -49,9 +49,9 @@
       </div>
     </div>
     <hr>
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column" data-aos="fade-up" data-aos-offset="100" data-aos-once="false" data-aos-easing="ease-in-out">
       <h3 class="text-uppercase text-start">related posts</h3>
-      <div class="d-flex flex-row w-100 overflow-auto text-start">
+      <div class="d-flex flex-row w-100 overflow-auto text-start" >
         <div class="col-12 col-md-6 px-3">
           <div class="related-card front-morph d-flex flex-column align-items-center p-3 mb-3">
             <div class="img-frame">
@@ -93,7 +93,7 @@
     <hr>
     <h3 class="text-uppercase text-start">comments</h3>
     <div class="flex-column w-100">
-      <div class="d-flex flex-column w-100 flex-md-row flex-md-wrap text-start mb-3 p-3 front-morph"  v-for="item in pageContent.data.comments" :key="item.id">
+      <div class="d-flex flex-column w-100 flex-md-row flex-md-wrap text-start mb-3 p-3 front-morph"  v-for="(item, index) in pageContent.data.comments" :key="item.id" :data-aos="`${index % 2 === 0 ? 'fade-left' : 'fade-right'}`" data-aos-offset="100" data-aos-once="false" data-aos-easing="ease-in-out">
         <div class="col-md-2">
           <img :src="item.user.photo" alt="" class="img-fluid comment-user-pic">
         </div>
@@ -109,6 +109,8 @@
         </div>
       </div>
     </div>
+    <a v-if="moreComment" href="#" @click.prevent="getComments">Load more comments</a>
+    <p v-else>All comment's been loaded</p>
     <h3 v-if="pageContent.data.comments.length === 0" class="text-uppercase">no comments</h3>
     <form action="" v-if="user._id" @submit.prevent="sendComment">
       <div class="row">
@@ -124,9 +126,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from 'vue'
+import { computed, defineComponent, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { getCurrent, postPostComment, removePostComment } from '@/api'
+import { getCurrent, postPostComment, removePostComment, getMoreComment } from '@/api'
 import { useToast } from 'vue-toastification'
 import { UserInfo } from '@/store'
 import { RecentCarousel } from '@/components/carousel.vue'
@@ -153,6 +155,8 @@ export default defineComponent({
     const router = useRouter()
     const store = useStore()
     const toast = useToast()
+    const commentPage = ref(2)
+    const moreComment = ref(true)
     const comment = ref('')
     const pageContent = reactive({ data: {} as PageContent })
     const openLogin = () => {
@@ -172,10 +176,10 @@ export default defineComponent({
         toast.error(error.response.data.message)
       }
     }
-    const getPage = async () => {
+    const getPage = async (id: string) => {
       try {
         const res = await getCurrent(
-          router.currentRoute.value.params.id as string
+          id
         )
         if (res.status === 200) {
           pageContent.data = res.data.data
@@ -192,12 +196,30 @@ export default defineComponent({
         console.log(res)
         if (res.status === 201) {
           toast.success('comment sent successfully')
-          getPage()
+          getPage(router.currentRoute.value.params.id as string)
         }
       } catch (error) {
         toast.error(error.response.data.message)
       }
     }
+    const getComments = async () => {
+      try {
+        if (!moreComment.value) return
+        const res = await getMoreComment(router.currentRoute.value.params.id as string, commentPage.value)
+        if (res.status === 200) {
+          // console.log(res.data.data)
+          if (res.data.data.length === 0) moreComment.value = false
+          pageContent.data.comments = [...pageContent.data.comments, ...res.data.data]
+          commentPage.value++
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }
+    }
+    watch(() => router.currentRoute.value.params.id, async (newVal) => {
+      if (!newVal) return
+      getPage(newVal as string)
+    })
     try {
       const res = await getCurrent(
         router.currentRoute.value.params.id as string
@@ -219,7 +241,9 @@ export default defineComponent({
       user,
       openLogin,
       sendComment,
-      deletePost
+      deletePost,
+      getComments,
+      moreComment
     }
   }
 })

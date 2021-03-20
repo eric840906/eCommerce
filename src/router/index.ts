@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "about" */ '../views/Front/Gallery.vue')
       },
       {
-        path: '/blog',
+        path: '/blog/:query',
         name: 'Blog',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
@@ -47,7 +47,7 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import(/* webpackChunkName: "about" */ '../views/Front/Post/postList.vue')
           },
           {
-            path: '/:id',
+            path: ':id',
             name: 'Postpage',
             // route level code-splitting
             // this generates a separate chunk (about.[hash].js) for this route
@@ -108,7 +108,24 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
+  scrollBehavior (to) {
+    // always scroll 10px above the element #main
+    if (to.name === 'Home') {
+      return {
+        // could also be
+        // el: document.getElementById('main'),
+        el: '#app',
+        top: 0
+      }
+    }
+    return {
+      // could also be
+      // el: document.getElementById('main'),
+      el: '.page-view',
+      top: 50
+    }
+  }
 })
 const toast = useToast()
 router.beforeEach(async (to, from, next) => {
