@@ -13,6 +13,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import Button from '@/components/btn.vue'
+import { useRouter } from 'vue-router'
 export interface CardProps {
   _id: string;
   title: string;
@@ -30,7 +31,9 @@ export default defineComponent({
     }
   },
   setup () {
+    const router = useRouter()
     const editPost = (id: string) => {
+      router.push(`/update/${id}`)
       console.log(id)
     }
     return {

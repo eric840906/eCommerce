@@ -29,7 +29,7 @@
         alt=""
       />
     </div>
-    <p class="text-start">{{ pageContent.data.article }}</p>
+    <p class="text-start" v-html="pageContent.data.article"></p>
     <hr>
     <div class="d-flex w-100">
       <p class="ms-auto text-uppercase mb-0 share-text">share</p>

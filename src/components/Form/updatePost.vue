@@ -67,7 +67,17 @@ import { useStore } from 'vuex'
 import axios from 'axios'
 import Button from '@/components/btn.vue'
 import { useToast } from 'vue-toastification'
-
+interface HTMLInputEvent extends Event {
+    target: HTMLInputElement & EventTarget;
+}
+interface Post {
+  title: string;
+  article: string;
+  photo: string;
+  images?: string[];
+  category: string;
+  _id?: string;
+}
 export default defineComponent({
   name: 'Post',
   components: {
@@ -76,37 +86,37 @@ export default defineComponent({
   setup () {
     const store = useStore()
     const toast = useToast()
-    const postData = reactive({
+    const postData = reactive<Post>({
       title: '',
       article: '',
-      photo: ''
+      photo: '',
+      images: [],
+      category: ''
     })
-    const otherImages = reactive({ images: [] })
+    const otherImages = reactive({ images: [] as File[] })
     const imageName = ref('')
     const imageThumb = ref('')
     const otherShow = ref(false)
-    const putImage = (e, index) => {
+    const putImage = (e: HTMLInputEvent, index: number) => {
+      if (!e.target.files) return
       otherImages.images.length = 5
       otherImages.images[index] = e.target.files[0]
-      console.log(otherImages.images)
     }
-    const uploadToImgur = async (e: FileReader) => {
+    const uploadToImgur = async (e: HTMLInputEvent) => {
       try {
-        console.log(e.target.files)
-        const file = e.target.files[0]
+        if (!e.target.files) return
+        const file: File = e.target.files[0]
         imageName.value = file.name
         imageThumb.value = window.URL.createObjectURL(file)
-        const form = new FormData()
+        const form: FormData = new FormData()
         form.append('title', imageName.value)
         form.append('image', file)
         const { data } = await imageUpload(form)
-        console.log(data)
         if (data.status === 200) {
           toast.success('image uploaded successfully')
           postData.photo = data.data.link
         }
       } catch (error) {
-        console.log(error)
         toast.error('OPPS! something wrong during the process')
       }
     }
@@ -123,9 +133,8 @@ export default defineComponent({
           toast.success(`${imgArr.length} images uploaded successfully`)
           otherImages.images.length = 0
         }
-        console.log(imgArr.map(img => img.data.data.link))
+        postData.images = imgArr.map(img => img.data.data.link)
       } catch (error) {
-        console.log(error)
         toast.error('OPPS! something wrong during the process')
       }
     }

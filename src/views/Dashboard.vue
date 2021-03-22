@@ -56,11 +56,18 @@
         </div>
         <div class="col-10">
           <div class="container">
-            <router-view v-slot="{ Component }">
-              <keep-alive>
-                <component :is="Component" :key="$route.fullPath"></component>
-              </keep-alive>
-            </router-view>
+            <suspense>
+              <template #default>
+                <router-view v-slot="{ Component }">
+                  <keep-alive>
+                    <component :is="Component" :key="$route.fullPath"></component>
+                  </keep-alive>
+                </router-view>
+              </template>
+              <template #fallback>
+                <loading></loading>
+              </template>
+            </suspense>
           </div>
         </div>
       </div>
