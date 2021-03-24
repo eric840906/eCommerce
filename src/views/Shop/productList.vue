@@ -31,7 +31,7 @@
       <div :data-type="item.category" class="product-card front-morph shadow">
         <div class="cover">
           <a href="#" class="icon-btn trans-left me-3" @click.prevent="goProduct(item._id)"><fa icon="search" type="fas" class="product-icon"></fa></a>
-          <a href="#" class="icon-btn trans-right"><fa icon="shopping-cart" type="fas" class="product-icon"></fa></a>
+          <a href="#" class="icon-btn trans-right"><img class="bag-icon" src="~@/assets/shopping-bag.svg" alt=""></a>
         </div>
         <div class="overflow-hidden d-flex img-frame">
           <img class="img-fluid product-img" :src="item.images[0]" alt="">
@@ -40,7 +40,8 @@
           <h4 class="ms-2 text-capitalize">{{item.name}}</h4>
         </div>
         <div class="product-rate ms-auto m-2 text-end">
-          <fa icon="star" type="fas" class="star-icon" v-for="(star,index) in Math.ceil(item.ratingsAverage)" :key="index"></fa>
+          <fa icon="star" type="fas" class="star-icon" v-for="(star,index) in Math.floor(item.ratingsAverage)" :key="index"></fa>
+          <fa icon="star-half" type="fas" class="star-icon" v-if="item.ratingsAverage - Math.ceil(item.ratingsAverage)"></fa>
         </div>
         <div class="price-block d-flex flex-column justify-content-center">
           <div class="d-flex justify-content-center">
@@ -76,7 +77,7 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const goProduct = (id: string) => {
-      router.push(`${id}`)
+      router.push(`default/${id}`)
     }
     const getContent = async (query: string) => {
       try {
@@ -122,6 +123,13 @@ export default defineComponent({
 .old-price {
   text-decoration: line-through;
   font-size: 1.5rem;
+}
+.icon-btn {
+  &:hover {
+    .bag-icon {
+      filter: invert(1%) sepia(6%) saturate(7465%) hue-rotate(244deg) brightness(50%) contrast(50%);
+    }
+  }
 }
 .product-icon {
   width: 30px;

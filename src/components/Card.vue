@@ -26,7 +26,7 @@ export default defineComponent({
   },
   props: {
     card: {
-      type: Object as PropType<CardProps[]>,
+      type: Object as PropType<CardProps>,
       required: true
     }
   },

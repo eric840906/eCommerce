@@ -89,7 +89,7 @@ export default defineComponent({
     const toast = useToast()
     const imageThumb = ref('')
     const imageName = ref('')
-    const pageData = reactive<Post>({ data: {} })
+    const pageData = reactive({ data: {} as Post })
     const uploadToImgur = async (e: HTMLInputEvent) => {
       try {
         if (!e.target.files) return

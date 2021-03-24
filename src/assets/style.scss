@@ -7,6 +7,18 @@ $primary: #906c64;
     color: white !important;
   }
 }
+.nav-bag-icon {
+  height: 2rem;
+  width: 2rem;
+  filter: invert(0%) sepia(4%) saturate(7465%) hue-rotate(257deg) brightness(46%) contrast(104%);
+}
+.bag-icon {
+  height: 2rem;
+  width: 2rem;
+  filter: invert(1%) sepia(6%) saturate(7465%) hue-rotate(244deg) brightness(99%) contrast(50%);
+  transition: 0.5s all ease;
+}
+
 .text-overflow-dot {
   white-space: nowrap;
   overflow: hidden;

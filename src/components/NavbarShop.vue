@@ -36,7 +36,9 @@
         </button>
         <a class="navbar-brand" href="#"><Logo :width="60"></Logo></a>
         <router-link class="text-decoration-none text-nav-link order-md-last" to="/cart">
-          <fa icon="shopping-cart" type="fas" class="nav-icon"></fa>
+          <img class="nav-bag-icon" src="~@/assets/shopping-bag.svg" alt="">
+          <!-- <div class="bag-icon"></div> -->
+          <!-- <fa icon="shopping-cart" type="fas" class="nav-icon"></fa> -->
         </router-link>
         <transition name="nav-show">
           <div v-show="navbarStatus" :class="['navbar-collapse','text-start']" id="navbarSupportedContent">
