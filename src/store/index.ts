@@ -73,12 +73,13 @@ export default createStore({
       try {
         commit('loadingChanger')
         const res = await userLogout()
-        if (res.data.state === 'success') {
+        console.log(res)
+        if (res.status === 200) {
           toast.success('Logged out successfully, see you next time!')
           commit('setUser', {})
           commit('loadingChanger')
           bus.emit('modal-close')
-          router.push({ path: '/' })
+          router.push({ name: 'Home' })
         }
       } catch (error) {
         toast.error(error.response.data.message)

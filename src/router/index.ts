@@ -12,57 +12,34 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/',
         name: 'Home',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Front/Home.vue')
+        component: () => import('../views/Front/Home.vue')
       },
       {
         path: '/about',
         name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Front/About.vue')
+        component: () => import('../views/Front/About.vue')
       },
       {
         path: '/gallery',
         name: 'Gallery',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Front/Gallery.vue')
+        component: () => import('../views/Front/Gallery.vue')
       },
       {
         path: '/blog/:query',
         name: 'Blog',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Front/Blog.vue'),
+        component: () => import('../views/Front/Blog.vue'),
         children: [
           {
             path: '',
             name: 'Postlist',
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
-            component: () => import(/* webpackChunkName: "about" */ '../views/Front/Post/postList.vue')
+            component: () => import('../views/Front/Post/postList.vue')
           },
           {
             path: ':id',
             name: 'Postpage',
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
-            component: () => import(/* webpackChunkName: "about" */ '../views/Front/Post/_id.vue')
+            component: () => import('../views/Front/Post/_id.vue')
           }
         ]
-      },
-      {
-        path: '/shop',
-        name: 'Shop',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Front/shop.vue')
       }
     ]
   },
@@ -70,18 +47,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/dashboard',
     name: 'Dashboard',
     meta: { requiresAuth: true },
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Dashboard.vue'),
+    component: () => import('../views/Dashboard.vue'),
     children: [
       {
         path: '/dashboard',
         name: 'Account',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Dashboard/Account.vue')
+        component: () => import('../views/Dashboard/Account.vue')
       },
       {
         path: '/userpost',
@@ -89,28 +60,36 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           keepAlive: true
         },
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Dashboard/Post.vue')
+        component: () => import('../views/Dashboard/Post.vue')
       },
       {
         path: '/userphoto',
         name: 'Photo',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Dashboard/Photo.vue')
+        component: () => import('../views/Dashboard/Photo.vue')
       },
       {
         path: '/update/:id',
         name: 'UpdatePost',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Dashboard/UpdatePost.vue')
+        component: () => import('../views/Dashboard/UpdatePost.vue')
       }
 
+    ]
+  },
+  {
+    path: '/shop/:query',
+    name: 'Shop',
+    component: () => import('../views/Shop.vue'),
+    children: [
+      {
+        path: '',
+        name: 'ProductList',
+        component: () => import('../views/Shop/productList.vue')
+      },
+      {
+        path: ':id',
+        name: 'ProductPage',
+        component: () => import('../views/Shop/_id.vue')
+      }
     ]
   }
 ]

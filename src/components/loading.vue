@@ -13,6 +13,7 @@
         <div class="rhombus big"></div>
       </div>
     </div>
+    <h1 class="loading-text">Loading</h1>
   </div>
 </template>
 
@@ -44,5 +45,15 @@ export default defineComponent({
 .modal {
   background-color: #0000009e;
   display: block;
+}
+.loading-text {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: flash-text 2s infinite;
+  animation-delay: 0.5s;
+  animation-duration: 2000ms;
+  color: white;
 }
 </style>

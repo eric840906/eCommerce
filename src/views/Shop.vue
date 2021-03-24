@@ -5,11 +5,13 @@
     <div>
       <img class="divider divider-top" src="~@/assets/divider.svg" alt="">
     </div>
+    <div class="container">
       <router-view v-slot="{ Component }">
-        <transition name="change" mode="out-in">
+        <transition name="fade" mode="out-in">
           <component :is="Component"></component>
         </transition>
       </router-view>
+    </div>
     <div>
       <img class="divider divider-bottom" src="~@/assets/divider.svg" alt="">
     </div>
@@ -20,16 +22,15 @@
   </div>
 </template>
 <script lang="ts">
-import Banner from '@/components/banner.vue'
+import Banner from '@/components/shopBanner.vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { defineComponent, computed, ref } from 'vue'
-import Navbar from '@/components/Navbar.vue'
+import Navbar from '@/components/NavbarShop.vue'
 import Footer from '@/components/footer.vue'
 import Modal from '@/components/modal.vue'
 import Loading from '@/components/loading.vue'
 import UserLink from '@/components/User/userLink.vue'
-// import bus from '@/plugins/bus'
 export default defineComponent({
   components: {
     Navbar,

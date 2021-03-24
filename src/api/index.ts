@@ -1,6 +1,7 @@
 import { signUp, logIn, check, logOut, updateInfo, updatePassword } from './auth'
 import { getPosts, getPost, getPostStats, createPost, updatePost } from './post'
 import { sendPostComment, deletePostComment, getPostComment } from './postComment'
+import { getProducts, getProductStat } from './product'
 import { uploadImage } from './imgur'
 export const userSignup = signUp
 export const userLogin = logIn
@@ -17,3 +18,5 @@ export const getMoreComment = getPostComment
 export const getPostCount = getPostStats
 export const postNewPost = createPost
 export const patchPost = updatePost
+export const getAllProduct = getProducts
+export const getProductCount = getProductStat

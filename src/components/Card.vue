@@ -34,7 +34,6 @@ export default defineComponent({
     const router = useRouter()
     const editPost = (id: string) => {
       router.push(`/update/${id}`)
-      console.log(id)
     }
     return {
       editPost

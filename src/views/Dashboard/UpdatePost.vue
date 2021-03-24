@@ -4,7 +4,7 @@
       <div class="col text-start">
         <form class="p-3 m-2 dashboard-morph" @submit.prevent="updateCurrent">
           <div class="title w-100 d-flex">
-            <h5 class="fw-bolder text-uppercase">Make new post</h5>
+            <h5 class="fw-bolder text-uppercase">Edit post</h5>
           </div>
           <div class="form-group">
             <label for="post-title">Post title</label>
@@ -65,7 +65,7 @@
             </form>
           </transition> -->
           <div class="form-group d-flex">
-            <Button class="ml-auto" type="submit">Make a new post</Button>
+            <Button class="ml-auto" type="submit">Edit this post</Button>
           </div>
         </form>
       </div>
@@ -108,7 +108,6 @@ export default defineComponent({
         toast.error('OPPS! something wrong during the process')
       }
     }
-    console.log(router.currentRoute.value.params.id)
     const updateCurrent = async () => {
       const data = {
         title: pageData.data.title,
@@ -117,10 +116,8 @@ export default defineComponent({
         images: pageData.data.images,
         category: pageData.data.category
       }
-      console.log(pageData)
       try {
         const res = await patchPost(router.currentRoute.value.params.id as string, data)
-        console.log(res.status)
         if (res.status === 200) {
           toast.success('Post updated')
           router.replace({ name: 'Post' })
@@ -131,7 +128,6 @@ export default defineComponent({
     }
     try {
       const res = await getCurrent(router.currentRoute.value.params.id as string)
-      console.log(res)
       if (res.status === 200) {
         pageData.data = res.data.data
       }

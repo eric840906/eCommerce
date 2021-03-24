@@ -3,7 +3,7 @@
     position: fixed;
     width: 100%;
     z-index: 999;">
-    <transition name="top-show" mode="in-out">
+    <!-- <transition name="top-show" mode="in-out">
       <nav :class="['navbar', 'navbar-expand-lg', 'navbar-light']" v-show="scrollPos < 100 && screenSize > 993">
         <div class="fluid-container d-flex w-100 px-5">
           <ul class="contact-info col">
@@ -28,26 +28,29 @@
           </div>
         </div>
       </nav>
-    </transition>
-    <nav :class="['navbar', 'navbar-expand-lg', 'navbar-light', { 'nav-bg' : scrollPos > 0 }, { 'fixed-top' : scrollPos > 100 }]">
+    </transition> -->
+    <nav :class="['navbar', 'navbar-expand-lg', 'navbar-light', 'nav-bg', { 'fixed-top' : scrollPos > 100 }]">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><Logo v-show="screenSize < 993" :width="60"></Logo></a>
         <button v-if="screenSize < 993" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" @click="toggleNav">
           <span class="navbar-toggler-icon"></span>
         </button>
+        <a class="navbar-brand" href="#"><Logo :width="60"></Logo></a>
+        <router-link class="text-decoration-none text-nav-link order-md-last" to="/cart">
+          <fa icon="shopping-cart" type="fas" class="nav-icon"></fa>
+        </router-link>
         <transition name="nav-show">
           <div v-show="navbarStatus" :class="['navbar-collapse','text-start']" id="navbarSupportedContent">
-            <ul class="navbar-nav mb-2 mb-lg-0 fs-4 justify-content-evenly w-100">
+            <ul class="navbar-nav mb-2 mb-lg-0 fs-4 justify-content-evenly justify-content-md-center w-100">
               <li class="nav-item">
                 <router-link class="text-decoration-none text-nav-link" to="/">Home</router-link>
               </li>
-              <li class="nav-item">
+              <li class="nav-item ms-md-5">
                 <router-link class="text-decoration-none text-nav-link" to="/gallery">Gallery</router-link>
               </li>
-              <li class="nav-item">
+              <li class="nav-item ms-md-5">
                 <router-link class="text-decoration-none text-nav-link" to="/blog/default">Blog</router-link>
               </li>
-              <li class="nav-item">
+              <li class="nav-item ms-md-5">
                 <router-link class="text-decoration-none text-nav-link" to="/shop/default">Shop</router-link>
               </li>
               <li v-if="screenSize < 993" class="nav-item">
@@ -118,6 +121,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .nav-bg {
   background-color: #ffffff47;
+}
+.nav-icon {
+  height: 30px;
 }
 .theme-color {
   color: #906c64;

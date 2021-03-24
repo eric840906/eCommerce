@@ -165,7 +165,6 @@ export default defineComponent({
     const deletePost = async (id: string) => {
       try {
         const res = await removePostComment(id)
-        console.log(res)
         if (res.status === 204) {
           pageContent.data.comments = pageContent.data.comments.filter((item: Comment) => {
             return item.id !== id
@@ -178,22 +177,22 @@ export default defineComponent({
     }
     const getPage = async (id: string) => {
       try {
+        store.dispatch('loading')
         const res = await getCurrent(
           id
         )
         if (res.status === 200) {
           pageContent.data = res.data.data
-          console.log(res.data.data)
-          console.log(pageContent)
+          setTimeout(() => store.dispatch('loading'), 2000)
         }
       } catch (error) {
         toast.error(error.response.data.message)
+        setTimeout(() => store.dispatch('loading'), 2000)
       }
     }
     const sendComment = async () => {
       try {
         const res = await postPostComment(router.currentRoute.value.params.id as string, comment.value)
-        console.log(res)
         if (res.status === 201) {
           toast.success('comment sent successfully')
           getPage(router.currentRoute.value.params.id as string)
@@ -207,7 +206,6 @@ export default defineComponent({
         if (!moreComment.value) return
         const res = await getMoreComment(router.currentRoute.value.params.id as string, commentPage.value)
         if (res.status === 200) {
-          // console.log(res.data.data)
           if (res.data.data.length === 0) moreComment.value = false
           pageContent.data.comments = [...pageContent.data.comments, ...res.data.data]
           commentPage.value++
@@ -226,8 +224,6 @@ export default defineComponent({
       )
       if (res.status === 200) {
         pageContent.data = res.data.data
-        console.log(res.data.data)
-        console.log(pageContent)
       }
     } catch (error) {
       toast.error(error.response.data.message)

@@ -51,8 +51,10 @@ import { getContent } from '@/api'
 import { RecentCarousel } from '@/components/carousel.vue'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 export default defineComponent({
   async setup () {
+    const store = useStore()
     const router = useRouter()
     const scrollComponent = ref<HTMLLIElement | null>(null)
     const loading = ref(false)
@@ -64,21 +66,23 @@ export default defineComponent({
     watch(() => router.currentRoute.value.params.query, async (newVal) => {
       console.log(newVal)
       try {
+        store.dispatch('loading')
         page.value = 1
         const res = await getContent(page.value, 5, newVal as string)
         pageContent.data = res.data.data
         if (res.status === 200) {
           page.value++
           callMore.value = true
+          setTimeout(() => store.dispatch('loading'), 2000)
         }
       } catch (error) {
         toast.error(error.response.data.message)
+        setTimeout(() => store.dispatch('loading'), 2000)
       }
     })
     const handleScroll = async () => {
       if (!callMore.value) return
       loading.value = true
-      console.log(scrollComponent.value)
       if (!scrollComponent.value) return
       const el: HTMLLIElement|null = scrollComponent.value
       if (el.getBoundingClientRect().bottom < window.innerHeight) {
