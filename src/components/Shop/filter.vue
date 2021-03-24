@@ -2,12 +2,12 @@
   <li class="d-flex justify-content-between flex-column">
     <label for=""><span>max</span></label>
     <label class="d-flex mb-1" for=""><span class="me-auto">0</span><span>500</span></label>
-    <input type="range" class="slider mb-3" min="0" max="500" v-model="priceMax">
-    <input type="number" class="custom-input" v-model="priceMax">
+    <input type="range" class="slider mb-3" min="0" max="500" v-model.number="priceMax">
+    <input type="number" class="custom-input" v-model.number="priceMax">
     <label for=""><span>min</span></label>
     <label class="d-flex mb-1" for=""><span class="me-auto">0</span><span>500</span></label>
-    <input type="range" class="slider mb-3" min="0" max="500" v-model="priceMin">
-    <input type="number" class="custom-input" v-model="priceMin">
+    <input type="range" class="slider mb-3" min="0" max="500" v-model.number="priceMin">
+    <input type="number" class="custom-input" v-model.number="priceMin">
     <Button class="mt-3" @click.prevent="submitFilter" :disabled="disabled">Filter Products</Button>
   </li>
 </template>
@@ -31,10 +31,14 @@ export default defineComponent({
       disabled.value = true
       if (priceMin.value > priceMax.value) {
         setTimeout(() => { disabled.value = false }, 3000)
+        priceMin.value = 0
+        priceMax.value = 0
         toast.error('invalid filter')
       } else {
         bus.emit('product-filter', `price[gte]=${priceMin.value}&price[lte]=${priceMax.value}`)
         setTimeout(() => { disabled.value = false }, 3000)
+        priceMin.value = 0
+        priceMax.value = 0
       }
     }
     return {

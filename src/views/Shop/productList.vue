@@ -30,7 +30,7 @@
     <div class="col-12 col-md-4 d-flex flex-column px-2 mb-3" v-for="item in productList.data" :key="item._id">
       <div :data-type="item.category" class="product-card front-morph shadow">
         <div class="cover">
-          <a href="#" class="icon-btn trans-left me-3"><fa icon="search" type="fas" class="product-icon"></fa></a>
+          <a href="#" class="icon-btn trans-left me-3" @click.prevent="goProduct(item._id)"><fa icon="search" type="fas" class="product-icon"></fa></a>
           <a href="#" class="icon-btn trans-right"><fa icon="shopping-cart" type="fas" class="product-icon"></fa></a>
         </div>
         <div class="overflow-hidden d-flex img-frame">
@@ -75,6 +75,9 @@ export default defineComponent({
     const toast = useToast()
     const store = useStore()
     const router = useRouter()
+    const goProduct = (id: string) => {
+      router.push(`${id}`)
+    }
     const getContent = async (query: string) => {
       try {
         store.dispatch('loading')
@@ -108,7 +111,8 @@ export default defineComponent({
     getContent(router.currentRoute.value.params.query as string)
     return {
       productList,
-      page
+      page,
+      goProduct
     }
   }
 })
