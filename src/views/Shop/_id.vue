@@ -1,13 +1,8 @@
 <template>
   <div class="d-flex flex-column mb-5 w-100 front-morph p-2 p-md-4">
     <div class="col-12 d-flex flex-column flex-lg-row flex-wrap">
-      <div class="col-12 col-lg-6 d-flex justify-content-center align-items-baseline px-md-3">
-        <img
-          class="article-cover-img img-fluid"
-          v-if="pageContent.data.images"
-          :src="pageContent.data.images[0]"
-          alt=""
-        />
+      <div class="col-12 col-lg-6 d-flex justify-content-center flex-column align-items-baseline px-md-3">
+          <Swiper :imgArr="pageContent.data.images"></Swiper>
       </div>
       <div class="col-12 col-lg-6 d-flex flex-column px-md-3 pt-3 pt-lg-0">
         <div class="d-flex flex-column text-start">
@@ -109,6 +104,7 @@
     </div>
     <hr>
     <h3 class="text-uppercase text-start">Reviews</h3>
+    <!-- <Swiper></Swiper> -->
     <!-- <div class="flex-column w-100">
       <div class="d-flex flex-column w-100 flex-md-row flex-md-wrap text-start mb-3 p-3 front-morph" :data-aos="`${index % 2 === 0 ? 'fade-left' : 'fade-right'}`" data-aos-offset="100" data-aos-once="false" data-aos-easing="ease-in-out">
         <div class="col-md-2">
@@ -144,6 +140,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref, watch } from 'vue'
+import Swiper from '@/components/swiper.vue'
 import { useRouter } from 'vue-router'
 import { getSingleProduct } from '@/api'
 import { Product } from '@/api/product'
@@ -155,7 +152,8 @@ import Button from '@/components/btn.vue'
 // import bus from '@/plugins/bus'
 export default defineComponent({
   components: {
-    Button
+    Button,
+    Swiper
   },
   setup () {
     const toast = useToast()
@@ -197,6 +195,14 @@ export default defineComponent({
   border-radius: 0.5rem;
   background-color: #a8847c;
   color: white;
+}
+.product-img {
+  height: 20rem;
+  width: 20rem;
+  @media (min-width: 425px) {
+    height: 30rem;
+    width: 30rem;
+  }
 }
 .article-cover-img {
   max-width: 100%;

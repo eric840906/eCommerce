@@ -53,6 +53,8 @@ export default defineComponent({
     bus.on('Signup-open', () => mountModal('signup'))
     bus.on('Logout-open', () => mountModal('logout'))
     bus.on('Cropper-open', () => mountModal('cropper'))
+    bus.on('Product-open', () => mountModal('productForm'))
+    bus.on('Product-update', () => mountModal('productForm'))
     screenSize()
     scrollPosition()
     const userLog = computed(() => {

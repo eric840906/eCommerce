@@ -86,7 +86,7 @@
             <input
               type="password"
               class="form-control"
-              id="user-password"
+              id="user-old-password"
               v-model="oldPass"
             />
             <small id="nameHelp" class="form-text text-muted"

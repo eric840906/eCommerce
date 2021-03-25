@@ -63,9 +63,9 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Dashboard/Post.vue')
       },
       {
-        path: '/userphoto',
-        name: 'Photo',
-        component: () => import('../views/Dashboard/Photo.vue')
+        path: '/product-control',
+        name: 'ProductControl',
+        component: () => import('../views/Dashboard/Product.vue')
       },
       {
         path: '/update/:id',
@@ -106,12 +106,13 @@ const router = createRouter({
         el: '#app',
         top: 0
       }
-    }
-    return {
-      // could also be
-      // el: document.getElementById('main'),
-      el: '.page-view',
-      top: 50
+    } else if (document.getElementById('main')) {
+      return {
+        // could also be
+        // el: document.getElementById('main'),
+        el: '.page-view',
+        top: 50
+      }
     }
   }
 })

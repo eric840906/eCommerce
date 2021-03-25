@@ -10,8 +10,29 @@ export interface Product {
   images: string[];
   category: string;
 }
+export interface UploadProduct {
+  name: string;
+  price: number;
+  discountPrice: number;
+  category: string;
+  quantity: number;
+  description: string;
+  images: string[];
+}
 const product = axios.create({
   baseURL: `${process.env.VUE_APP_APIPATH}/product`
+})
+export const uploadProduct = (data: UploadProduct) => product.request({
+  url: '',
+  method: 'POST',
+  withCredentials: true,
+  data
+})
+export const updateProduct = (data: UploadProduct, id: string) => product.request({
+  url: `/${id}`,
+  method: 'PATCH',
+  withCredentials: true,
+  data
 })
 export const getProducts = (category: string, page: number, filterString = '') => product.request({
   url: `${category === 'default' ? `?&${filterString}&page=${page}&limit=9` : `?&category=${category}&${filterString}&page=1&limit=9`}`,

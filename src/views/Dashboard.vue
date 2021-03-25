@@ -17,25 +17,25 @@
                   <div class="col-10"><span class="title p-2">Info</span></div>
                 </router-link>
               </li>
-              <li class="drawer-item">
+              <li class="drawer-item" v-if="user.role === 'admin'">
                 <router-link to="/userpost" class="d-flex">
                   <div class="col-2">
                     <span class="nav-icon p-2"
                       ><fa icon="edit" type="fas" class="contact-icon"></fa
                     ></span>
                   </div>
-                  <div class="col-10"><span class="title p-2">Post</span></div>
+                  <div class="col-10"><span class="title p-2">Blog post</span></div>
                 </router-link>
               </li>
-              <li class="drawer-item">
-                <router-link to="/userphoto" class="d-flex">
+              <li class="drawer-item" v-if="user.role === 'admin'">
+                <router-link to="/product-control" class="d-flex">
                   <div class="col-2">
                     <span class="nav-icon p-2"
-                      ><fa icon="images" type="far" class="contact-icon"></fa
+                      ><fa icon="cookie-bite" type="fas" class="contact-icon"></fa
                     ></span>
                   </div>
                   <div class="col-10">
-                    <span class="title p-2">Photos</span>
+                    <span class="title p-2">Products</span>
                   </div>
                 </router-link>
               </li>
@@ -77,8 +77,9 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import UserLink from '@/components/User/userLink.vue'
 import bus from '@/plugins/bus'
 export default defineComponent({
@@ -86,6 +87,8 @@ export default defineComponent({
     UserLink
   },
   setup () {
+    const store = useStore()
+    const user = computed(() => store.getters.getUser)
     const openLogout = () => {
       bus.emit('Logout-open')
     }
@@ -95,7 +98,8 @@ export default defineComponent({
     }
     return {
       goFront,
-      openLogout
+      openLogout,
+      user
     }
   }
 })
