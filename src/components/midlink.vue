@@ -47,7 +47,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .mid-link {
-  background-image: url('~@/assets/midlink1.jpg');
+  background-image: url('~@/assets/midlink1.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

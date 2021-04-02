@@ -77,7 +77,7 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-image: url('~@/assets/background.svg');
+  background-image: url('~@/assets/background.png');
   background-color: #efd2c4;
 }
 .fade-enter-from, .fade-leave-to {

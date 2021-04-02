@@ -1,5 +1,5 @@
 <template>
-  <img src="~@/assets/logo2.svg" alt="" :style="{ width: `${width}px` }">
+  <img src="~@/assets/logo2.png" alt="" :style="{ width: `${width}px` }">
 </template>
 
 <script lang="ts">

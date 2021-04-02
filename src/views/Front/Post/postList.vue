@@ -64,7 +64,6 @@ export default defineComponent({
     const callMore = ref(true)
     const pageContent = reactive({ data: [] as RecentCarousel[]|null })
     watch(() => router.currentRoute.value.params.query, async (newVal) => {
-      console.log(newVal)
       try {
         store.dispatch('loading')
         page.value = 1
@@ -88,12 +87,10 @@ export default defineComponent({
       if (el.getBoundingClientRect().bottom < window.innerHeight) {
         try {
           const res = await getContent(page.value, 5, router.currentRoute.value.params.query as string)
-          console.log(res)
           if (res.status === 200) {
             if (!pageContent.data) return
             pageContent.data.push(...res.data.data)
             if (res.data.data.length === 0) callMore.value = false
-            console.log(pageContent.data)
             loading.value = false
             page.value++
           }

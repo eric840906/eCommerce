@@ -9,6 +9,7 @@ export interface Product {
   description: string;
   images: string[];
   category: string;
+  finalPrice?: number;
 }
 export interface UploadProduct {
   name: string;
@@ -33,6 +34,11 @@ export const updateProduct = (data: UploadProduct, id: string) => product.reques
   method: 'PATCH',
   withCredentials: true,
   data
+})
+export const removeProduct = (id: string) => product.request({
+  url: `/${id}`,
+  method: 'DELETE',
+  withCredentials: true
 })
 export const getProducts = (category: string, page: number, filterString = '') => product.request({
   url: `${category === 'default' ? `?&${filterString}&page=${page}&limit=9` : `?&category=${category}&${filterString}&page=1&limit=9`}`,

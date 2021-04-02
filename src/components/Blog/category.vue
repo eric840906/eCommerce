@@ -23,7 +23,6 @@ export default defineComponent({
     const cateList = reactive({ data: [] as Category[] })
     try {
       const res = await getPostCount()
-      console.log(res)
       if (res.status === 200) {
         cateList.data = res.data.data
       }

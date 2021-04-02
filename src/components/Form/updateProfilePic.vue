@@ -96,7 +96,7 @@ export default {
             const { data: { data: { link } } } = await imageUpload(form)
             this.imageUrl = link
             const data = {
-              photo: this.imageUrl
+              photo: `${this.imageUrl}s`
             }
             const res = await userUpdate(data)
             if (res.status === 200) {

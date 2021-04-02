@@ -18,7 +18,15 @@ $primary: #906c64;
   filter: invert(1%) sepia(6%) saturate(7465%) hue-rotate(244deg) brightness(99%) contrast(50%);
   transition: 0.5s all ease;
 }
-
+.product-btn {
+  background-color: #a8847c;
+  border-radius: 0.5rem;
+  border: none;
+  .product-btn-icon {
+    color: white;
+    height: 1rem;
+  }
+}
 .text-overflow-dot {
   white-space: nowrap;
   overflow: hidden;

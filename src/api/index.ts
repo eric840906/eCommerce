@@ -1,7 +1,8 @@
 import { signUp, logIn, check, logOut, updateInfo, updatePassword } from './auth'
 import { getPosts, getPost, getPostStats, createPost, updatePost } from './post'
 import { sendPostComment, deletePostComment, getPostComment } from './postComment'
-import { getProducts, getProductStat, getProduct, uploadProduct, updateProduct } from './product'
+import { getProducts, getProductStat, getProduct, uploadProduct, updateProduct, removeProduct } from './product'
+import { addCart, removeCartItem } from './cart'
 import { uploadImage } from './imgur'
 export const userSignup = signUp
 export const userLogin = logIn
@@ -23,3 +24,6 @@ export const getProductCount = getProductStat
 export const getSingleProduct = getProduct
 export const postProduct = uploadProduct
 export const patchProduct = updateProduct
+export const deleteProduct = removeProduct
+export const postCart = addCart
+export const deleteItem = removeCartItem

@@ -20,7 +20,6 @@ export default defineComponent({
   async setup () {
     let rawContent: RecentCarousel[] = []
     const res = await getContent(1, 2, 'default')
-    console.log(res)
     rawContent = res.data.data
     const computedContent = computed(() => {
       return rawContent.map(item => {

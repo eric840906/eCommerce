@@ -2,7 +2,7 @@
   <div class="banner-container">
     <div class="banner">
       <div class="banner-text w-100 d-flex flex-column justify-content-center">
-        <h1 class="display-1 text-uppercase">shop</h1>
+        <h1 class="display-1 text-uppercase"><slot></slot></h1>
       </div>
     </div>
   </div>

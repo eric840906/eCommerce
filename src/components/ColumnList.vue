@@ -43,7 +43,7 @@ export default defineComponent({
     const useList = computed(() => {
       return props.list.map(item => {
         if (!item.avatar) {
-          item.avatar = require('@/assets/logo2.svg')
+          item.avatar = require('@/assets/logo2.png')
         }
         return item
       })

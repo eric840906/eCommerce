@@ -3,7 +3,7 @@
     <Navbar :screenSize='screenWidth' :scrollPos="scroll"></Navbar>
     <Banner></Banner>
     <div>
-      <img class="divider divider-top" src="~@/assets/divider.svg" alt="">
+      <img class="divider divider-top" src="~@/assets/divider.png" alt="">
     </div>
       <router-view v-slot="{ Component }">
         <transition name="change" mode="out-in">
@@ -11,7 +11,7 @@
         </transition>
       </router-view>
     <div>
-      <img class="divider divider-bottom" src="~@/assets/divider.svg" alt="">
+      <img class="divider divider-bottom" src="~@/assets/divider.png" alt="">
     </div>
     <Footer></Footer>
     <transition name="bounce">

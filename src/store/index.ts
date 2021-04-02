@@ -2,6 +2,7 @@ import { createStore, createLogger } from 'vuex'
 import { userLogin, userCheck, userLogout } from '@/api'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
+import { Product } from '@/api/product'
 import bus from '@/plugins/bus'
 const toast = useToast()
 const router = useRouter()
@@ -16,12 +17,31 @@ export interface UserInfo {
   _id?: string;
   photo?: string;
 }
+interface CartItem {
+  _id: string;
+  quantity: number;
+  product: Product;
+}
+interface UserData {
+  __v?: number;
+  _id: string;
+  active: boolean;
+  cart: CartItem[];
+  createdAt: string;
+  description?: string;
+  email: string;
+  id: string;
+  name: string;
+  passwordChangedAt?: string;
+  photo?: string;
+  role: string;
+}
 export default createStore({
   state: {
     screenSize: 0,
     scrollY: 0,
     loading: false,
-    user: {}
+    user: {} as UserData
   },
   mutations: {
     screenChanger (state, size) {

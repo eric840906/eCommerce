@@ -1,9 +1,9 @@
 <template>
   <div>
     <Navbar :screenSize='screenWidth' :scrollPos="scroll"></Navbar>
-    <Banner></Banner>
+    <Banner>{{bannerTitle}}</Banner>
     <div>
-      <img class="divider divider-top" src="~@/assets/divider.svg" alt="">
+      <img class="divider divider-top" src="~@/assets/divider.png" alt="">
     </div>
     <div class="container page-view">
       <router-view v-slot="{ Component }">
@@ -13,7 +13,7 @@
       </router-view>
     </div>
     <div>
-      <img class="divider divider-bottom" src="~@/assets/divider.svg" alt="">
+      <img class="divider divider-bottom" src="~@/assets/divider.png" alt="">
     </div>
     <Footer></Footer>
     <transition name="bounce">
@@ -44,6 +44,9 @@ export default defineComponent({
     const store = useStore()
     const router = useRouter()
     const modalComponent = ref('')
+    const bannerTitle = computed(() => {
+      return router.currentRoute.value.path.split('/')[1]
+    })
     const screenWidth = computed(() => {
       return store.getters.getScreenSize
     })
@@ -67,7 +70,7 @@ export default defineComponent({
     const loading = computed(() => {
       return store.getters.getLoading
     })
-    return { screenWidth, scroll, modalComponent, loading, userLog, goDashboard }
+    return { screenWidth, scroll, modalComponent, loading, userLog, goDashboard, bannerTitle }
   }
 })
 </script>

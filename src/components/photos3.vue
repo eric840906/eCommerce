@@ -65,332 +65,332 @@ export interface Photo {
   url: string;
   title: string;
 }
-const photoArr: Photo[] = [
-  {
-    id: 1,
-    url:
-      require('@/assets/photo/photo1.jpg'),
-    title: 'Birthday cakes'
-  },
-  {
-    id: 2,
-    url:
-      require('@/assets/photo/photo2.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 3,
-    url:
-      require('@/assets/photo/photo3.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 4,
-    url:
-      require('@/assets/photo/photo4.jpg'),
-    title: 'Birthday cakes'
-  },
-  {
-    id: 5,
-    url:
-      require('@/assets/photo/photo5.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 6,
-    url:
-      require('@/assets/photo/photo6.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 7,
-    url:
-      require('@/assets/photo/photo7.jpg'),
-    title: 'Milktea cakes'
-  },
-  {
-    id: 8,
-    url:
-      require('@/assets/photo/photo8.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 9,
-    url:
-      'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-    title: 'Cookies'
-  },
-  {
-    id: 10,
-    url:
-      require('@/assets/photo/photo1.jpg'),
-    title: 'Birthday cakes'
-  },
-  {
-    id: 11,
-    url:
-      require('@/assets/photo/photo2.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 12,
-    url:
-      require('@/assets/photo/photo3.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 13,
-    url:
-      require('@/assets/photo/photo4.jpg'),
-    title: 'Birthday cakes'
-  },
-  {
-    id: 14,
-    url:
-      require('@/assets/photo/photo5.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 15,
-    url:
-      require('@/assets/photo/photo6.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 16,
-    url:
-      require('@/assets/photo/photo7.jpg'),
-    title: 'Milktea cakes'
-  },
-  {
-    id: 17,
-    url:
-      require('@/assets/photo/photo8.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 18,
-    url:
-      'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-    title: 'Cookies'
-  },
-  {
-    id: 19,
-    url:
-      require('@/assets/photo/photo1.jpg'),
-    title: 'Birthday cakes'
-  },
-  {
-    id: 20,
-    url:
-      require('@/assets/photo/photo2.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 21,
-    url:
-      require('@/assets/photo/photo3.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 22,
-    url:
-      require('@/assets/photo/photo4.jpg'),
-    title: 'Birthday cakes'
-  },
-  {
-    id: 23,
-    url:
-      require('@/assets/photo/photo5.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 24,
-    url:
-      require('@/assets/photo/photo6.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 25,
-    url:
-      require('@/assets/photo/photo7.jpg'),
-    title: 'Milktea cakes'
-  },
-  {
-    id: 26,
-    url:
-      require('@/assets/photo/photo8.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 27,
-    url:
-      'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-    title: 'Cookies'
-  },
-  {
-    id: 28,
-    url:
-      require('@/assets/photo/photo2.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 29,
-    url:
-      require('@/assets/photo/photo3.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 30,
-    url:
-      require('@/assets/photo/photo4.jpg'),
-    title: 'Birthday cakes'
-  },
-  {
-    id: 31,
-    url:
-      require('@/assets/photo/photo5.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 32,
-    url:
-      require('@/assets/photo/photo6.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 33,
-    url:
-      require('@/assets/photo/photo7.jpg'),
-    title: 'Milktea cakes'
-  },
-  {
-    id: 34,
-    url:
-      require('@/assets/photo/photo8.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 35,
-    url:
-      'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-    title: 'Cookies'
-  },
-  {
-    id: 36,
-    url:
-      require('@/assets/photo/photo3.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 37,
-    url:
-      require('@/assets/photo/photo4.jpg'),
-    title: 'Birthday cakes'
-  },
-  {
-    id: 38,
-    url:
-      require('@/assets/photo/photo5.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 39,
-    url:
-      require('@/assets/photo/photo6.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 40,
-    url:
-      require('@/assets/photo/photo7.jpg'),
-    title: 'Milktea cakes'
-  },
-  {
-    id: 41,
-    url:
-      require('@/assets/photo/photo8.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 42,
-    url:
-      'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-    title: 'Cookies'
-  },
-  {
-    id: 43,
-    url:
-      require('@/assets/photo/photo2.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 44,
-    url:
-      require('@/assets/photo/photo3.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 45,
-    url:
-      require('@/assets/photo/photo4.jpg'),
-    title: 'Birthday cakes'
-  },
-  {
-    id: 46,
-    url:
-      require('@/assets/photo/photo5.jpg'),
-    title: 'Cakes'
-  },
-  {
-    id: 47,
-    url:
-      require('@/assets/photo/photo6.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 48,
-    url:
-      require('@/assets/photo/photo7.jpg'),
-    title: 'Milktea cakes'
-  },
-  {
-    id: 49,
-    url:
-      require('@/assets/photo/photo8.jpg'),
-    title: 'Lemon tarts'
-  },
-  {
-    id: 50,
-    url:
-      'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-    title: 'Cookies'
-  }
-]
+// const photoArr: Photo[] = [
+//   {
+//     id: 1,
+//     url:
+//       require('@/assets/photo/photo1.jpg'),
+//     title: 'Birthday cakes'
+//   },
+//   {
+//     id: 2,
+//     url:
+//       require('@/assets/photo/photo2.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 3,
+//     url:
+//       require('@/assets/photo/photo3.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 4,
+//     url:
+//       require('@/assets/photo/photo4.jpg'),
+//     title: 'Birthday cakes'
+//   },
+//   {
+//     id: 5,
+//     url:
+//       require('@/assets/photo/photo5.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 6,
+//     url:
+//       require('@/assets/photo/photo6.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 7,
+//     url:
+//       require('@/assets/photo/photo7.jpg'),
+//     title: 'Milktea cakes'
+//   },
+//   {
+//     id: 8,
+//     url:
+//       require('@/assets/photo/photo8.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 9,
+//     url:
+//       'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+//     title: 'Cookies'
+//   },
+//   {
+//     id: 10,
+//     url:
+//       require('@/assets/photo/photo1.jpg'),
+//     title: 'Birthday cakes'
+//   },
+//   {
+//     id: 11,
+//     url:
+//       require('@/assets/photo/photo2.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 12,
+//     url:
+//       require('@/assets/photo/photo3.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 13,
+//     url:
+//       require('@/assets/photo/photo4.jpg'),
+//     title: 'Birthday cakes'
+//   },
+//   {
+//     id: 14,
+//     url:
+//       require('@/assets/photo/photo5.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 15,
+//     url:
+//       require('@/assets/photo/photo6.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 16,
+//     url:
+//       require('@/assets/photo/photo7.jpg'),
+//     title: 'Milktea cakes'
+//   },
+//   {
+//     id: 17,
+//     url:
+//       require('@/assets/photo/photo8.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 18,
+//     url:
+//       'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+//     title: 'Cookies'
+//   },
+//   {
+//     id: 19,
+//     url:
+//       require('@/assets/photo/photo1.jpg'),
+//     title: 'Birthday cakes'
+//   },
+//   {
+//     id: 20,
+//     url:
+//       require('@/assets/photo/photo2.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 21,
+//     url:
+//       require('@/assets/photo/photo3.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 22,
+//     url:
+//       require('@/assets/photo/photo4.jpg'),
+//     title: 'Birthday cakes'
+//   },
+//   {
+//     id: 23,
+//     url:
+//       require('@/assets/photo/photo5.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 24,
+//     url:
+//       require('@/assets/photo/photo6.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 25,
+//     url:
+//       require('@/assets/photo/photo7.jpg'),
+//     title: 'Milktea cakes'
+//   },
+//   {
+//     id: 26,
+//     url:
+//       require('@/assets/photo/photo8.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 27,
+//     url:
+//       'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+//     title: 'Cookies'
+//   },
+//   {
+//     id: 28,
+//     url:
+//       require('@/assets/photo/photo2.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 29,
+//     url:
+//       require('@/assets/photo/photo3.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 30,
+//     url:
+//       require('@/assets/photo/photo4.jpg'),
+//     title: 'Birthday cakes'
+//   },
+//   {
+//     id: 31,
+//     url:
+//       require('@/assets/photo/photo5.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 32,
+//     url:
+//       require('@/assets/photo/photo6.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 33,
+//     url:
+//       require('@/assets/photo/photo7.jpg'),
+//     title: 'Milktea cakes'
+//   },
+//   {
+//     id: 34,
+//     url:
+//       require('@/assets/photo/photo8.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 35,
+//     url:
+//       'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+//     title: 'Cookies'
+//   },
+//   {
+//     id: 36,
+//     url:
+//       require('@/assets/photo/photo3.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 37,
+//     url:
+//       require('@/assets/photo/photo4.jpg'),
+//     title: 'Birthday cakes'
+//   },
+//   {
+//     id: 38,
+//     url:
+//       require('@/assets/photo/photo5.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 39,
+//     url:
+//       require('@/assets/photo/photo6.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 40,
+//     url:
+//       require('@/assets/photo/photo7.jpg'),
+//     title: 'Milktea cakes'
+//   },
+//   {
+//     id: 41,
+//     url:
+//       require('@/assets/photo/photo8.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 42,
+//     url:
+//       'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+//     title: 'Cookies'
+//   },
+//   {
+//     id: 43,
+//     url:
+//       require('@/assets/photo/photo2.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 44,
+//     url:
+//       require('@/assets/photo/photo3.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 45,
+//     url:
+//       require('@/assets/photo/photo4.jpg'),
+//     title: 'Birthday cakes'
+//   },
+//   {
+//     id: 46,
+//     url:
+//       require('@/assets/photo/photo5.jpg'),
+//     title: 'Cakes'
+//   },
+//   {
+//     id: 47,
+//     url:
+//       require('@/assets/photo/photo6.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 48,
+//     url:
+//       require('@/assets/photo/photo7.jpg'),
+//     title: 'Milktea cakes'
+//   },
+//   {
+//     id: 49,
+//     url:
+//       require('@/assets/photo/photo8.jpg'),
+//     title: 'Lemon tarts'
+//   },
+//   {
+//     id: 50,
+//     url:
+//       'https://images.unsplash.com/photo-1607919564479-c2e00f3b14a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+//     title: 'Cookies'
+//   }
+// ]
 export default defineComponent({
-  setup () {
-    const photoRow1 = computed(() => {
-      return photoArr.filter((item, index) => {
-        return (index + 1) % 1 === 0
-      }).slice(25)
-    })
-    const photoRow2 = computed(() => {
-      return photoArr.filter((item, index) => {
-        return (index + 1) % 2 === 0
-      })
-    })
-    const photoRow3 = computed(() => {
-      return photoArr.filter((item, index) => {
-        return (index + 1) % 3 !== 0 && (index + 1) % 5 !== 0
-      }).slice(2)
-    })
-    return {
-      photoArr,
-      photoRow1,
-      photoRow2,
-      photoRow3
-    }
-  }
+  // setup () {
+  //   const photoRow1 = computed(() => {
+  //     return photoArr.filter((item, index) => {
+  //       return (index + 1) % 1 === 0
+  //     }).slice(25)
+  //   })
+  //   const photoRow2 = computed(() => {
+  //     return photoArr.filter((item, index) => {
+  //       return (index + 1) % 2 === 0
+  //     })
+  //   })
+  //   const photoRow3 = computed(() => {
+  //     return photoArr.filter((item, index) => {
+  //       return (index + 1) % 3 !== 0 && (index + 1) % 5 !== 0
+  //     }).slice(2)
+  //   })
+  //   return {
+  //     photoArr,
+  //     photoRow1,
+  //     photoRow2,
+  //     photoRow3
+  //   }
+  // }
 })
 </script>
 

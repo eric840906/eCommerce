@@ -28,7 +28,7 @@
         <div class="d-flex flex-row mt-auto">
           <div class="d-flex count-box mt-auto">
             <div class="col-8">
-              <input class="number-box shadow border-0" type="number" name="" id="" max="5" min="0" v-model.number="productCount">
+              <input class="number-box shadow border-0" type="number" max="10" min="1" v-model.number="productCount">
             </div>
             <div class="col-4 ps-1">
               <div class="d-flex flex-column h-100">
@@ -39,7 +39,7 @@
           </div>
           <p class="text-start display-6 mb-0 ms-auto align-self-end">${{pageContent.data.discountPrice ? pageContent.data.discountPrice * productCount : pageContent.data.price * productCount }}</p>
         </div>
-        <Button class="mt-5 text-uppercase">add to shopping bag</Button>
+        <Button class="mt-5 text-uppercase" @click.prevent="addBag(pageContent.data._id)">add to shopping bag</Button>
     </div>
     </div>
     <hr>
@@ -139,12 +139,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, watch } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import Swiper from '@/components/swiper.vue'
 import { useRouter } from 'vue-router'
-import { getSingleProduct } from '@/api'
+import { getSingleProduct, postCart } from '@/api'
 import { Product } from '@/api/product'
 import { useToast } from 'vue-toastification'
+import { useStore } from 'vuex'
 // import { UserInfo } from '@/store'
 // import { RecentCarousel } from '@/components/carousel.vue'
 import Button from '@/components/btn.vue'
@@ -158,6 +159,7 @@ export default defineComponent({
   setup () {
     const toast = useToast()
     const router = useRouter()
+    const store = useStore()
     const productCount = ref(1)
     const pageContent = reactive({ data: {} as Product })
     const addCount = () => {
@@ -170,9 +172,24 @@ export default defineComponent({
     }
     const getProduct = async () => {
       const res = await getSingleProduct(router.currentRoute.value.params.id as string)
-      console.log(res)
       if (res.status === 200) {
         pageContent.data = res.data.data
+      }
+    }
+    const addBag = async (id: string) => {
+      const data = {
+        product: id,
+        quantity: productCount.value
+      }
+      try {
+        const res = await postCart(data)
+        if (res.status === 200) {
+          console.log(res)
+          await store.dispatch('Check')
+          toast.success('item added')
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
       }
     }
     getProduct()
@@ -180,7 +197,8 @@ export default defineComponent({
       pageContent,
       productCount,
       addCount,
-      minusCount
+      minusCount,
+      addBag
     }
   }
 })
@@ -196,29 +214,12 @@ export default defineComponent({
   background-color: #a8847c;
   color: white;
 }
-.product-img {
-  height: 20rem;
-  width: 20rem;
-  @media (min-width: 425px) {
-    height: 30rem;
-    width: 30rem;
-  }
-}
 .article-cover-img {
   max-width: 100%;
   height: auto;
 }
 .count-box {
   width: 8rem;
-}
-.product-btn {
-  background-color: #a8847c;
-  border-radius: 0.5rem;
-  border: none;
-  .product-btn-icon {
-    color: white;
-    height: 1rem;
-  }
 }
 .author-info {
   background-color: #eef0f14a;

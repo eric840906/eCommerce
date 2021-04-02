@@ -20,7 +20,6 @@ export default defineComponent({
     const getCount = async () => {
       try {
         const res = await getProductCount()
-        console.log(res)
         if (res.status === 200) {
           cateList.data = res.data.data
         }

@@ -31,7 +31,7 @@
       <div :data-type="item.category" class="product-card front-morph shadow">
         <div class="cover">
           <a href="#" class="icon-btn trans-left me-3" @click.prevent="goProduct(item._id)"><fa icon="search" type="fas" class="product-icon"></fa></a>
-          <a href="#" class="icon-btn trans-right"><img class="bag-icon" src="~@/assets/shopping-bag.svg" alt=""></a>
+          <a href="#" class="icon-btn trans-right" @click.prevent="addProduct(item._id)"><img class="bag-icon" src="~@/assets/shopping-bag.svg" alt=""></a>
         </div>
         <div class="overflow-hidden d-flex img-frame">
           <img class="img-fluid product-img" :src="item.images[0]" alt="">
@@ -55,9 +55,9 @@
 </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref, watch } from 'vue'
+import { defineComponent, reactive, ref, watch, computed } from 'vue'
 import { Product } from '@/api/product'
-import { getAllProduct } from '@/api'
+import { getAllProduct, postCart } from '@/api'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
@@ -76,8 +76,32 @@ export default defineComponent({
     const toast = useToast()
     const store = useStore()
     const router = useRouter()
+    const userLog = computed(() => {
+      return store.getters.getUser
+    })
     const goProduct = (id: string) => {
       router.push(`default/${id}`)
+    }
+    const addProduct = async (id: string) => {
+      const loginFirst = () => {
+        toast.info('Please log in first to use cart')
+        bus.emit('Login-open')
+      }
+      if (!userLog.value._id) return loginFirst()
+      const data = {
+        product: id,
+        quantity: 1
+      }
+      try {
+        const res = await postCart(data)
+        if (res.status === 200) {
+          console.log(res)
+          await store.dispatch('Check')
+          toast.success('item added')
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }
     }
     const getContent = async (query: string) => {
       try {
@@ -102,18 +126,20 @@ export default defineComponent({
         const res = await getAllProduct(router.currentRoute.value.params.query as string, page.value, filter)
         if (res.status === 200) {
           productList.data = res.data.data
-          setTimeout(() => store.dispatch('loading'), 1000)
+          setTimeout(() => store.dispatch('loading'), 3000)
         }
       } catch (error) {
         toast.error(error.response.data.message)
-        setTimeout(() => store.dispatch('loading'), 1000)
+        setTimeout(() => store.dispatch('loading'), 3000)
       }
     })
     getContent(router.currentRoute.value.params.query as string)
     return {
       productList,
       page,
-      goProduct
+      goProduct,
+      addProduct,
+      userLog
     }
   }
 })

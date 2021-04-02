@@ -119,7 +119,6 @@ export default defineComponent({
     }
     const { data } = await getContent(1, 5)
     carouselContent.data = data.data
-    console.log(carouselContent.data)
     return {
       // carousel,
       carouselIndex,

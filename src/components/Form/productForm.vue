@@ -67,9 +67,8 @@
 
 <script lang="ts">
 import { useToast } from 'vue-toastification'
-import { userSignup, imageUpload, postProduct } from '@/api'
-import { useStore } from 'vuex'
-import { defineComponent, ref, reactive, onMounted } from 'vue'
+import { imageUpload, postProduct } from '@/api'
+import { defineComponent, ref, reactive } from 'vue'
 import { HTMLInputEvent } from '@/views/Dashboard/Post.vue'
 import bus from '@/plugins/bus'
 import Button from '@/components/btn.vue'
@@ -111,8 +110,12 @@ export default defineComponent({
           toast.success(`${imgArr.length} images uploaded successfully`)
           images.value.length = 0
         }
-        console.log(imgArr)
-        productData.data.images = imgArr.map(img => img.data.data.link)
+        productData.data.images = imgArr.map(img => {
+          let originalLink = img.data.data.link.split('.')
+          originalLink[2] = originalLink[2].concat('m')
+          originalLink = originalLink.join('.')
+          return originalLink
+        })
       } catch (error) {
         toast.error('OPPS! something wrong during the process')
       }
@@ -121,9 +124,7 @@ export default defineComponent({
       try {
         if (productData.data.discountPrice > productData.data.price) return toast.warning('discount cannot be greater than the original price')
         if (productData.data.discountPrice === 0 || productData.data.price === 0) return toast.warning('invalid price or discount')
-        console.log(productData.data)
         const res = await postProduct(productData.data)
-        console.log(res)
         if (res.status === 201) {
           toast.success('Product uploaded successfully')
           bus.emit('modal-close')

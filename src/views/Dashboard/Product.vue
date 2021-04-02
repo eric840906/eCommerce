@@ -44,7 +44,7 @@
               </td>
               <td scope="col">
                 <Button class="w-100 mb-2" @click="toggleUpdate(item, index)">UPDATE</Button>
-                <Button class="w-100">DELETE</Button>
+                <Button class="w-100" @click="removeProduct(item._id)">DELETE</Button>
               </td>
             </tr>
             <div v-show="updateIndex === index">
@@ -58,7 +58,7 @@
                   <Button class="ms-auto" type="submit">Upload images</Button>
                 </div>
                 <div class="col-4 p-1">
-                  <Button @click.prevent="updateProduct(item._id)">Confirm & Update</Button>
+                  <Button @click.prevent="updateProduct()">Confirm & Update</Button>
                 </div>
               </form>
             </div>
@@ -72,7 +72,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from 'vue'
 import Button from '@/components/btn.vue'
-import { getAllProduct, imageUpload, patchProduct } from '@/api'
+import { getAllProduct, imageUpload, patchProduct, deleteProduct } from '@/api'
 import { Product } from '@/api/product'
 import { HTMLInputEvent } from '@/views/Dashboard/Post.vue'
 import { useToast } from 'vue-toastification'
@@ -86,7 +86,7 @@ export default defineComponent({
       bus.emit('Product-open')
     }
     const toast = useToast()
-    const updateIndex = ref(null)
+    const updateIndex = ref<number | null>(null)
     const page = ref(1)
     const images = ref([] as File[])
     const productList = ref([] as Product[])
@@ -99,7 +99,7 @@ export default defineComponent({
         quantity: 0,
         description: '',
         images: [] as string[]
-      }
+      } as Product
     })
     const putImage = (e: HTMLInputEvent, index: number) => {
       if (!e.target.files) return
@@ -119,24 +119,25 @@ export default defineComponent({
           toast.success(`${imgArr.length} images uploaded successfully`)
           images.value.length = 0
         }
-        console.log(imgArr)
-        currentProduct.data.images = imgArr.map(img => img.data.data.link)
-        console.log(currentProduct.data)
+        currentProduct.data.images = imgArr.map(img => {
+          let originalLink = img.data.data.link.split('.')
+          originalLink[2] = originalLink[2].concat('m')
+          originalLink = originalLink.join('.')
+          return originalLink
+        })
       } catch (error) {
         toast.error('OPPS! something wrong during the process')
       }
     }
-    const toggleUpdate = (item, index) => {
+    const toggleUpdate = (item: Product, index: number) => {
       updateIndex.value = index
       currentProduct.data = item
     }
     const getList = async () => {
       const res = await getAllProduct('default', page.value)
-      console.log(res)
       productList.value = res.data.data
     }
-    const updateProduct = async (id: string) => {
-      console.log(currentProduct.data)
+    const updateProduct = async () => {
       try {
         if (currentProduct.data.discountPrice > currentProduct.data.price) return toast.warning('discount cannot be greater than the original price')
         if (currentProduct.data.discountPrice === 0 || currentProduct.data.price === 0) return toast.warning('invalid price or discount')
@@ -149,7 +150,17 @@ export default defineComponent({
       } catch (error) {
         toast.error(error.response.data.message)
       }
-      console.log(id)
+    }
+    const removeProduct = async (id: string) => {
+      try {
+        const res = await deleteProduct(id)
+        if (res.status === 204) {
+          await getList()
+          toast.success('Product deleted')
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }
     }
     bus.on('upload-success', () => getList())
     getList()
@@ -161,7 +172,8 @@ export default defineComponent({
       currentProduct,
       putImage,
       uploadOthers,
-      updateProduct
+      updateProduct,
+      removeProduct
     }
   }
 })

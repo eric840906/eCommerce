@@ -139,7 +139,6 @@ export default defineComponent({
       }
     }
     const newPost = async () => {
-      console.log(postData)
       try {
         store.dispatch('loading')
         const res = await axios({
@@ -158,7 +157,6 @@ export default defineComponent({
           // getPosts() // bus emit to post
         }
       } catch (error) {
-        console.log(error.response.data.message)
         store.dispatch('loading')
         toast.error('An error occurred while posting')
       }

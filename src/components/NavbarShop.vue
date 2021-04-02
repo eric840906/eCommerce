@@ -35,11 +35,12 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#"><Logo :width="60"></Logo></a>
-        <router-link class="text-decoration-none text-nav-link order-md-last" to="/">
+        <a class="text-decoration-none text-nav-link order-md-last cart-btn" @click="toCart">
+          <span class="cart-indicator" v-if="userLog.cart">{{userLog.cart.length}}</span>
           <img class="nav-bag-icon" src="~@/assets/shopping-bag.svg" alt="">
           <!-- <div class="bag-icon"></div> -->
           <!-- <fa icon="shopping-cart" type="fas" class="nav-icon"></fa> -->
-        </router-link>
+        </a>
         <transition name="nav-show">
           <div v-show="navbarStatus" :class="['navbar-collapse','text-start']" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 fs-4 justify-content-evenly justify-content-md-center w-100">
@@ -73,6 +74,8 @@
 import bus from '@/plugins/bus'
 import { defineComponent, ref, computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
 import Logo from '@/components/logo.vue'
 import Button from '@/components/btn.vue'
 export default defineComponent({
@@ -92,29 +95,28 @@ export default defineComponent({
   },
   setup () {
     const store = useStore()
+    const router = useRouter()
+    const toast = useToast()
     const navbarStatus = ref(false)
     const userLog = computed(() => {
       return store.getters.getUser
     })
+    const toCart = () => {
+      const loginFirst = () => {
+        toast.info('Please log in first to use cart')
+        bus.emit('Login-open')
+      }
+      if (userLog.value._id) return router.push({ name: 'Cart' })
+      return loginFirst()
+    }
     const toggleNav = () => {
       navbarStatus.value = !navbarStatus.value
-    }
-    const openLogin = () => {
-      bus.emit('Login-open')
-    }
-    const openSignup = () => {
-      bus.emit('Signup-open')
-    }
-    const openLogout = () => {
-      bus.emit('Logout-open')
     }
     return {
       navbarStatus,
       toggleNav,
-      openLogin,
-      openSignup,
       userLog,
-      openLogout
+      toCart
     }
   }
 })
@@ -126,6 +128,28 @@ export default defineComponent({
 }
 .nav-icon {
   height: 30px;
+}
+.cart-btn {
+  position: relative;
+  padding-right: 10px;
+  .cart-indicator {
+    position: absolute;
+    top: -12px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    padding: 0px;
+    color: #936f67;
+    border-radius: 100%;
+  }
+  &:hover {
+    .nav-bag-icon {
+      filter: invert(88%) sepia(134%) saturate(0%) hue-rotate(0deg) brightness(187%) contrast(229%);
+    }
+    .cart-indicator {
+      color: white;
+    }
+  }
 }
 .theme-color {
   color: #906c64;

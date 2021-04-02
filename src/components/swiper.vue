@@ -44,6 +44,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .product-img {
+  object-fit: cover;
   height: 20rem;
   width: 20rem;
   @media (min-width: 425px) {
