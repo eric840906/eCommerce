@@ -28,7 +28,7 @@
   </div>
   <div class="col-12 col-md-9 d-flex flex-column flex-md-row flex-md-wrap">
     <div class="col-12 col-md-4 d-flex flex-column px-2 mb-3" v-for="item in productList.data" :key="item._id">
-      <div :data-type="item.category" class="product-card front-morph shadow">
+      <div :data-type="item.category" class="product-card front-morph shadow position-relative">
         <div class="cover">
           <a href="#" class="icon-btn trans-left me-3" @click.prevent="goProduct(item._id)"><fa icon="search" type="fas" class="product-icon"></fa></a>
           <a href="#" class="icon-btn trans-right" @click.prevent="addProduct(item._id)"><img class="bag-icon" src="~@/assets/shopping-bag.svg" alt=""></a>

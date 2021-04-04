@@ -47,9 +47,9 @@
               <li class="nav-item">
                 <router-link class="text-decoration-none text-nav-link" to="/">Home</router-link>
               </li>
-              <li class="nav-item ms-md-5">
+              <!-- <li class="nav-item ms-md-5">
                 <router-link class="text-decoration-none text-nav-link" to="/gallery">Gallery</router-link>
-              </li>
+              </li> -->
               <li class="nav-item ms-md-5">
                 <router-link class="text-decoration-none text-nav-link" to="/blog/default">Blog</router-link>
               </li>

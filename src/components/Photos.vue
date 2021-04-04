@@ -13,7 +13,7 @@
       </div>
     </div>
   </div> -->
-  <div class="row">
+  <div class="d-flex">
     <div class="wrapper">
       <div class="grid-row col">
         <div class="grid-frame" v-for="image in photoRow1" :key="image.id" >
