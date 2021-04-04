@@ -112,7 +112,7 @@ export default defineComponent({
         }
         productData.data.images = imgArr.map(img => {
           let originalLink = img.data.data.link.split('.')
-          originalLink[2] = originalLink[2].concat('m')
+          originalLink[2] = originalLink[2].concat('l')
           originalLink = originalLink.join('.')
           return originalLink
         })

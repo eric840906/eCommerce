@@ -51,6 +51,19 @@
         </div>
       </div>
     </div>
+    <template v-if="!hasMore">
+      <div class="col-12">
+      </div>
+    </template>
+    <template v-else>
+      <div class="col-12 my-3" v-if="!contentLoading">
+        <Button @click="getMore($router.currentRoute.value.params.query)">load more</Button>
+      </div>
+      <div class="col-12 my-3" v-else>
+        <loading></loading>
+        <p>loading more products</p>
+      </div>
+    </template>
   </div>
 </div>
 </template>
@@ -61,17 +74,21 @@ import { getAllProduct, postCart } from '@/api'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import Button from '@/components/btn.vue'
 import Filter from '@/components/Shop/filter.vue'
 import Category from '@/components/Shop/category.vue'
 import bus from '@/plugins/bus'
 export default defineComponent({
   components: {
     Category,
-    Filter
+    Filter,
+    Button
   },
   setup () {
     const productList = reactive({ data: [] as Product[] })
     const page = ref(1)
+    const contentLoading = ref(false)
+    const hasMore = ref(true)
     const filterString = ref('')
     const toast = useToast()
     const store = useStore()
@@ -110,17 +127,42 @@ export default defineComponent({
         if (res.status === 200) {
           productList.data = res.data.data
           setTimeout(() => store.dispatch('loading'), 1000)
+          page.value++
         }
       } catch (error) {
         toast.error(error.response.data.message)
         setTimeout(() => store.dispatch('loading'), 1000)
       }
     }
+    const getMore = async (query: string) => {
+      try {
+        contentLoading.value = true
+        const res = await getAllProduct(query, page.value)
+        if (res.status === 200) {
+          if (res.data.data.length === 0) {
+            hasMore.value = false
+            contentLoading.value = false
+            toast.info("all product's been loaded")
+            return
+          }
+          contentLoading.value = false
+          productList.data = [...productList.data, ...res.data.data]
+          page.value++
+        }
+      } catch (error) {
+        contentLoading.value = false
+        toast.error(error.response.data.messgae)
+      }
+    }
     watch(() => router.currentRoute.value.params.query as string, (newVal) => {
+      page.value = 1
+      hasMore.value = true
       getContent(newVal)
     })
     bus.on('product-filter', async (filter) => {
       filterString.value = filter
+      page.value = 1
+      hasMore.value = true
       try {
         store.dispatch('loading')
         const res = await getAllProduct(router.currentRoute.value.params.query as string, page.value, filter)
@@ -139,7 +181,10 @@ export default defineComponent({
       page,
       goProduct,
       addProduct,
-      userLog
+      userLog,
+      contentLoading,
+      getMore,
+      hasMore
     }
   }
 })
@@ -161,10 +206,6 @@ export default defineComponent({
   width: 30px;
   height: 30px;
 }
-.star-icon {
-  width: 15px;
-  height: 15px;
-}
 .product-card {
   overflow: hidden;
   .cover {
@@ -181,9 +222,6 @@ export default defineComponent({
   }
   .icon-btn {
     transition: all 0.5s ease;
-  }
-  .product-rate {
-    color: #ffc100;
   }
   .trans-left {
     transform: translate(-500%, 500%);

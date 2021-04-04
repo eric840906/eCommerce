@@ -3,7 +3,7 @@
     <div class="row">
       <Button class="checkout-btn mt-3">checkout</Button>
     </div>
-    <div class="row overflow-auto shadow my-5 rounded" v-if="cart">
+    <div :class="['row', 'overflow-auto', 'my-5', 'rounded', `${cart.length ? 'shadow' : '' }`]" v-if="cart">
       <table class="rwd-table text-start front-morph" v-if="cart.length">
         <thead>
           <tr class="text-uppercase">
@@ -28,8 +28,8 @@
         </tbody>
       </table>
       <div v-else>
-        <h1>Cart is empty now</h1>
-        <a href="#">go shopping</a>
+        <h1 class="my-5">Your cart is empty now</h1>
+        <Button class="my-5" @click.prevent="goShop">go shopping</Button>
       </div>
     </div>
   </div>
@@ -42,6 +42,7 @@ import { useStore } from 'vuex'
 import { Product } from '@/api/product'
 import { deleteItem } from '@/api'
 import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
 export interface CartItem {
   _id: string;
   quantity: number;
@@ -54,6 +55,7 @@ export default defineComponent({
   },
   setup () {
     const store = useStore()
+    const router = useRouter()
     const toast = useToast()
     const deleteProduct = async (product: string) => {
       console.log({ product })
@@ -74,9 +76,13 @@ export default defineComponent({
         return item
       })
     })
+    const goShop = () => {
+      router.push('/shop/default')
+    }
     return {
       cart,
-      deleteProduct
+      deleteProduct,
+      goShop
     }
   }
 })

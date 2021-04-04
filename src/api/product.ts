@@ -41,7 +41,7 @@ export const removeProduct = (id: string) => product.request({
   withCredentials: true
 })
 export const getProducts = (category: string, page: number, filterString = '') => product.request({
-  url: `${category === 'default' ? `?&${filterString}&page=${page}&limit=9` : `?&category=${category}&${filterString}&page=1&limit=9`}`,
+  url: `${category === 'default' ? `?&${filterString}&page=${page}&limit=9` : `?&category=${category}&${filterString}&page=${page}&limit=9`}`,
   method: 'GET',
   withCredentials: true,
   onUploadProgress: progressEvent => {

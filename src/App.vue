@@ -80,6 +80,9 @@ export default defineComponent({
   background-image: url('~@/assets/background.png');
   background-color: #efd2c4;
 }
+.top-nav-btn {
+  width: 100px;
+}
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
 }

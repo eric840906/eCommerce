@@ -24,7 +24,7 @@ export default defineComponent({
     const password = ref('')
     const store = useStore()
     const cancel = () => {
-      bus.emit('close-modal')
+      bus.emit('modal-close')
     }
     const logout = () => {
       store.dispatch('logOut')

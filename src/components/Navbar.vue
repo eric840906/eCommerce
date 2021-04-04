@@ -19,11 +19,11 @@
           <a class="navbar-brand col" href="#"><Logo :width="60"></Logo></a>
           <div class="button-group col justify-content-end">
             <div>
-              <Button @click="openLogout" v-show="userLog._id">Log out</Button>
-              <Button @click="openLogin" v-show="!userLog._id">Log in</Button>
+              <Button class="top-nav-btn" @click="openLogout" v-show="userLog._id">Log out</Button>
+              <Button class="top-nav-btn" @click="openLogin" v-show="!userLog._id">Log in</Button>
             </div>
             <div>
-              <Button @click="openSignup" v-show="!userLog._id">Sign up</Button>
+              <Button class="top-nav-btn" @click="openSignup" v-show="!userLog._id">Sign up</Button>
             </div>
           </div>
         </div>
@@ -41,20 +41,21 @@
               <li class="nav-item">
                 <router-link class="text-decoration-none text-nav-link" to="/">Home</router-link>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <router-link class="text-decoration-none text-nav-link" to="/gallery">Gallery</router-link>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <router-link class="text-decoration-none text-nav-link" to="/blog/default">Blog</router-link>
               </li>
               <li class="nav-item">
                 <router-link class="text-decoration-none text-nav-link" to="/shop/default">Shop</router-link>
               </li>
-              <li v-if="screenSize < 993" class="nav-item">
-                <Button @click="openLogin">Log in</Button>
+              <li v-if="screenSize < 993" class="d-flex nav-item my-2">
+                <Button class="ms-auto top-nav-btn" @click="openLogin" v-show="!userLog._id">Log in</Button>
+                <Button class="ms-auto top-nav-btn" @click="openLogout" v-show="userLog._id">Log out</Button>
               </li>
-              <li v-if="screenSize < 993" class="nav-item">
-                <Button @click="openSignup">Sign up</Button>
+              <li v-if="screenSize < 993" class="d-flex nav-item">
+                <Button class="ms-auto top-nav-btn" @click="openSignup" v-show="!userLog._id">Sign up</Button>
               </li>
             </ul>
           </div>
@@ -139,7 +140,7 @@ export default defineComponent({
 .navbar {
   z-index: 999;
   width: 100%;
-  backdrop-filter: blur(3px);
+  // backdrop-filter: blur(3px);
   transition: all 0.5s ease;
 }
 .router-link-active {

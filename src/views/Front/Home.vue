@@ -22,7 +22,7 @@
     <Midlink></Midlink>
     <div class="container my-5">
       <div class="row flex-column">
-        <CategoryHead>Photos</CategoryHead>
+        <CategoryHead>Gallery</CategoryHead>
         <Photos :photos="galleryContent"></Photos>
       </div>
     </div>
@@ -33,10 +33,11 @@
 import { screenSize } from '@/hook/screenSize'
 import { scrollPosition } from '@/hook/scrollTop'
 import { useStore } from 'vuex'
-import { defineComponent, computed, onMounted, reactive, ref } from 'vue'
+import { defineComponent, computed, onMounted, ref } from 'vue'
 import { StoreProps } from '@/store/index'
-import { getContent } from '@/api'
-import Carousel, { RecentCarousel } from '@/components/carousel.vue'
+import { getAllProduct } from '@/api'
+import Carousel from '@/components/carousel.vue'
+import { Product } from '@/api/product'
 import SiteIntro from '@/components/siteIntro.vue'
 import Midlink from '@/components/midlink.vue'
 import CategoryHead from '@/components/Title/CategoryHead.vue'
@@ -53,8 +54,7 @@ export default defineComponent({
   },
   setup () {
     const store = useStore<StoreProps>()
-    const page = ref(0)
-    const galleryContent = reactive({ data: [] as Photo[] })
+    const galleryContent = ref([] as Photo[])
     const screenWidth = computed(() => {
       return store.state.screenSize
     })
@@ -64,12 +64,12 @@ export default defineComponent({
       return store.state.scrollY
     })
     onMounted(async () => {
-      const { data } = await getContent(page.value, 10)
-      galleryContent.data = data.data.map((item: RecentCarousel) => {
+      const { data } = await getAllProduct('default', 1)
+      galleryContent.value = data.data.map((item: Product) => {
         return {
-          title: item.title,
-          id: item.id,
-          images: item.photo
+          title: item.name,
+          id: item._id,
+          images: item.images
         }
       })
     })

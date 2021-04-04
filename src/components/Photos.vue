@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex flex-wrap justify-content-center">
-    <div  class="col-xl-3 col-lg-4 col-md-6 p-2 d-flex align-items-center" v-for="item in photos.data" :key="item.id">
+  <!-- <div class="d-flex flex-wrap justify-content-center">
+    <div  :class="['col-xl-3', 'col-lg-4', 'col-md-6', 'p-2', 'd-flex', 'align-items-center']" v-for="item in photos.data" :key="item.id">
       <div class="photo-container">
         <div class="cover">
           <h1>{{item.title}}</h1>
@@ -12,138 +12,195 @@
         <img class="photo" :src="item.images">
       </div>
     </div>
+  </div> -->
+  <div class="row">
+    <div class="wrapper">
+      <div class="grid-row col">
+        <div class="grid-frame" v-for="image in photoRow1" :key="image.id" >
+          <a href="#" @click.prevent="goProduct(image.id)">
+            <div class="gird-cover">
+              <p class="display-6">{{image.title}}</p>
+            </div>
+            <img :src="image.images"/>
+          </a>
+        </div>
+      </div>
+      <div class="grid-row col">
+        <div class="grid-frame" v-for="image in photoRow2" :key="image.id" >
+          <a href="#" @click.prevent="goProduct(image.id)">
+            <div class="gird-cover">
+              <p class="display-6">{{image.title}}</p>
+            </div>
+            <img :src="image.images"/>
+          </a>
+        </div>
+      </div>
+      <div class="grid-row col">
+        <div class="grid-frame" v-for="image in photoRow3" :key="image.id" >
+          <a href="#" @click.prevent="goProduct(image.id)">
+            <div class="gird-cover">
+              <p class="display-6">{{image.title}}</p>
+            </div>
+            <img :src="image.images"/>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import 'aos/dist/aos.css'
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, computed } from 'vue'
+import { useRouter } from 'vue-router'
 export interface Photo {
   id: number;
   image?: string;
   title: string;
   images?: string[];
 }
-// const photoArr: Photo[] = [
-//   {
-//     id: 1,
-//     image: 'https://images.unsplash.com/photo-1530655268988-5456ff267b16?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1349&q=80',
-//     title: 'Bread'
-//   },
-//   {
-//     id: 2,
-//     image: 'https://images.unsplash.com/photo-1614778168817-d8a55d646890?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=602&q=80',
-//     title: 'Ingredients'
-//   },
-//   {
-//     id: 3,
-//     image: 'https://images.unsplash.com/photo-1614335146221-6904ed47804a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=678&q=80',
-//     title: 'Mexican special'
-//   },
-//   {
-//     id: 4,
-//     image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-//     title: 'French fries'
-//   },
-//   {
-//     id: 5,
-//     image: 'https://images.unsplash.com/photo-1614207217402-aad086099c2a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-//     title: 'Special breakfast'
-//   },
-//   {
-//     id: 6,
-//     image: 'https://images.unsplash.com/photo-1600400815719-ea6f9a3a4a49?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80',
-//     title: 'Light meal'
-//   },
-//   {
-//     id: 7,
-//     image: 'https://images.unsplash.com/photo-1613939492135-21ffbbcf246b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-//     title: 'Doughnuts'
-//   },
-//   {
-//     id: 8,
-//     image: 'https://images.unsplash.com/photo-1614028731365-72477465ef43?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=634&q=80',
-//     title: 'Multigrain Breads'
-//   },
-//   {
-//     id: 9,
-//     image: 'https://images.unsplash.com/photo-1612719448473-469e665bd15c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-//     title: 'Pancakes'
-//   },
-//   {
-//     id: 10,
-//     image: 'https://images.unsplash.com/photo-1605566689888-0c7efcc6296e?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=564&q=80',
-//     title: 'Croissants'
-//   }
-// ]
 export default defineComponent({
   props: {
-    photos: Array as PropType<string[]>
+    photos: Array as PropType<Photo[]>
   },
-  setup () {
+  setup (props) {
+    const router = useRouter()
+    const goProduct = (id: string) => {
+      router.push(`/shop/default/${id}`)
+    }
+    const photoRow1 = computed(() => {
+      if (!props.photos) return
+      return props.photos.slice(0, props.photos.length / 3)
+    })
+    const photoRow2 = computed(() => {
+      if (!props.photos) return
+      return props.photos.slice(3, 2 * props.photos.length / 3)
+    })
+    const photoRow3 = computed(() => {
+      if (!props.photos) return
+      return props.photos.slice(6, props.photos.length)
+    })
     return {
-      // photoArr
+      photoRow1,
+      photoRow2,
+      photoRow3,
+      goProduct
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
-.photo {
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: 1s all ease;
-  position: relative;
-}
-.photo-container {
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  &:hover {
-    .photo{
-      transform: scale(1.2);
-    }
+// .photo {
+//   cursor: pointer;
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover;
+//   transition: 1s all ease;
+//   position: relative;
+// }
+// .photo-container {
+//   position: relative;
+//   overflow: hidden;
+//   height: 100%;
+//   &:hover {
+//     .photo{
+//       transform: scale(1.2);
+//     }
+//   }
+//   .cover {
+//     color: white;
+//     opacity: 0;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     flex-direction: column;
+//     background: #00000070;
+//     backdrop-filter: blur(2px);
+//     width: 100%;
+//     height: 100%;
+//     z-index: 9;
+//     position: absolute;
+//     transition: 0.3s all ease;
+//     .btn {
+//       margin-left: 0;
+//       background: none;
+//       border: none;
+//       transition: 0.5s all;
+//       &:first-child {
+//         transform: translate(-55px, 100px);
+//       }
+//       &:last-child {
+//         transform: translate(55px, 100px);
+//       }
+//     }
+//     .photo-button-icon {
+//       width: 40px;
+//       color: white;
+//       &:hover {
+//         color: #4c3120;
+//       }
+//     }
+//     &:hover {
+//       opacity: 1;
+//       .btn {
+//         transform: translate(0);
+//       }
+//     }
+//   }
+// }
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-gap: 15px;
+  align-items: start;
+  @media (max-width: 425px) {
+    grid-template-columns: repeat(1, 1fr);
   }
-  .cover {
-    color: white;
-    opacity: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: #00000070;
-    backdrop-filter: blur(2px);
+  img {
+    object-fit: cover;
     width: 100%;
-    height: 100%;
-    z-index: 9;
+  }
+  .one {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+}
+.grid-row {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  grid-gap: 15px;
+}
+.grid-frame {
+  overflow: hidden;
+  position: relative;
+  .gird-cover {
     position: absolute;
-    transition: 0.3s all ease;
-    .btn {
-      margin-left: 0;
-      background: none;
-      border: none;
-      transition: 0.5s all;
-      &:first-child {
-        transform: translate(-55px, 100px);
-      }
-      &:last-child {
-        transform: translate(55px, 100px);
-      }
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: #00000059;
+    color: white;
+    width: 100%;
+    display: none;
+    z-index: 1;
+    height: 100%;
+    backdrop-filter: blur(1px);
+    justify-content: center;
+  }
+  img {
+    transition: all 0.5s ease;
+  }
+  &:hover {
+    .gird-cover {
+      display: flex;
+      flex-direction: column;
     }
-    .photo-button-icon {
-      width: 40px;
-      color: white;
-      &:hover {
-        color: #4c3120;
-      }
-    }
-    &:hover {
-      opacity: 1;
-      .btn {
-        transform: translate(0);
-      }
+    img {
+      transform: scale(1.2);
     }
   }
 }

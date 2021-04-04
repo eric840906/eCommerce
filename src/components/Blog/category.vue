@@ -12,7 +12,7 @@ import { useToast } from 'vue-toastification'
 import bus from '@/plugins/bus'
 interface Category {
   _id: string;
-  numPost: number;
+  numPosts: number;
 }
 export default defineComponent({
   async setup () {

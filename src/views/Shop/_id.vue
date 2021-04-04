@@ -104,37 +104,43 @@
     </div>
     <hr>
     <h3 class="text-uppercase text-start">Reviews</h3>
-    <!-- <Swiper></Swiper> -->
-    <!-- <div class="flex-column w-100">
-      <div class="d-flex flex-column w-100 flex-md-row flex-md-wrap text-start mb-3 p-3 front-morph" :data-aos="`${index % 2 === 0 ? 'fade-left' : 'fade-right'}`" data-aos-offset="100" data-aos-once="false" data-aos-easing="ease-in-out">
-        <div class="col-md-2">
+    <div class="flex-column w-100">
+      <div class="d-flex flex-column w-100 flex-md-row flex-md-wrap text-start mb-3 p-3 front-morph" v-for="item in reviewList" :key="item._id">
+        <div class="col">
           <img :src="item.user.photo" alt="" class="img-fluid comment-user-pic">
         </div>
-        <div class="ps-md-3 col-md-10 comment-text d-flex flex-column">
-          <div class="d-flex flex-row w-100">
-            <p>user name</p>
-            <p class="ms-auto">date</p>
+        <div class="col-md-10 mt-2 mt-md-0 comment-text d-flex flex-column">
+          <div class="d-flex flex-md-row w-100 flex-column">
+            <div class="d-flex flex-row">
+              <h5>{{item.user.name}}</h5>
+              <div class="product-rate ms-auto ms-md-2">
+                <fa icon="star" type="fas" class="star-icon align-text-top" v-for="(star, index) in item.rating" :key="index"></fa>
+              </div>
+            </div>
+            <p class="ms-md-auto">{{ new Date(item.createdAt).toLocaleDateString('en-us', { year:'numeric', month: 'long', day: 'numeric' }) }}</p>
           </div>
-          <p class="text-break">user comment</p>
+          <p class="text-break">{{item.review}}</p>
           <div class="ms-auto">
-            <Button v-if="user.role === 'admin'" @click.prevent="deletePost(item._id)">DELETE POST</Button>
+            <!-- <Button v-if="user.role === 'admin'" @click.prevent="deletePost(item._id)">DELETE POST</Button> -->
           </div>
         </div>
       </div>
-    </div> -->
-    <!-- <a v-if="moreComment" href="#" @click.prevent="getComments">Load more comments</a>
-    <p v-else>All comment's been loaded</p>
-    <h3 v-if="pageContent.data.comments.length === 0" class="text-uppercase">no comments</h3>
-    <form action="" v-if="user._id" @submit.prevent="sendComment">
+    </div>
+    <form action="" @submit.prevent="leaveReview">
       <div class="row">
         <div class="col text-start">
-          <label for="comment">Laeve your comment</label>
-          <textarea type="text" class="form-control mt-2" id="comment" placeholder="Last name" aria-label="Last name" v-model="comment"></textarea>
-          <Button class="mt-2 ms-auto" type="submit">Send my comment</Button>
+          <label for="comment">Laeve your review</label>
+          <textarea type="text" class="form-control mt-2" id="comment" placeholder="Last name" aria-label="Last name" v-model="review"></textarea>
+          <label for="comment">Rating</label>
+          <div>
+            <template v-for="(item, index) in 5" :key="index">
+              <a href="#"><fa icon="star" :type="`${rating >= index + 1 ? 'fas' : 'far' }`" class="star-icon" @mouseover="hoverStar(index+1)" @mouseleave="hoverStar(0)" @click.prevent="decideRate(true , index+1)" @dblclick="decideRate(false , 0)"></fa></a>
+            </template>
+          </div>
+          <Button class="mt-2 ms-auto" type="submit">Send my review</Button>
         </div>
       </div>
     </form>
-    <Button v-else class="mt-2 ms-auto" type="submit" @click="openLogin">You must be logged in to leave comments</Button> -->
   </div>
 </template>
 
@@ -142,15 +148,26 @@
 import { defineComponent, reactive, ref } from 'vue'
 import Swiper from '@/components/swiper.vue'
 import { useRouter } from 'vue-router'
-import { getSingleProduct, postCart } from '@/api'
+import { getSingleProduct, postCart, getReview, postReview } from '@/api'
 import { Product } from '@/api/product'
 import { useToast } from 'vue-toastification'
 import { useStore } from 'vuex'
+import { UserInfo } from '@/store'
+import { ReviewData } from '@/api/review'
 // import { UserInfo } from '@/store'
 // import { RecentCarousel } from '@/components/carousel.vue'
 import Button from '@/components/btn.vue'
 // import { useStore } from 'vuex'
 // import bus from '@/plugins/bus'
+export interface Review {
+  _id: string;
+  product: string;
+  review: string;
+  rating: number;
+  user: UserInfo;
+  createdAt: string;
+  id?: string;
+}
 export default defineComponent({
   components: {
     Button,
@@ -160,8 +177,49 @@ export default defineComponent({
     const toast = useToast()
     const router = useRouter()
     const store = useStore()
+    const review = ref('')
+    const reviewList = ref([] as Review[])
+    const reviewPage = ref(1)
     const productCount = ref(1)
     const pageContent = reactive({ data: {} as Product })
+    const rateDecide = ref(false)
+    const rating = ref(0)
+    const loadReview = async () => {
+      try {
+        const res = await getReview(router.currentRoute.value.params.id as string, reviewPage.value)
+        if (res.status === 200) {
+          reviewList.value = res.data.data
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }
+    }
+    const leaveReview = async () => {
+      const data: ReviewData = {
+        product: router.currentRoute.value.params.id as string,
+        review: review.value,
+        rating: rating.value
+      }
+      try {
+        const res = await postReview(data)
+        if (res.status === 201) {
+          toast.success('review posted')
+          loadReview()
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }
+      console.log(data)
+    }
+    const hoverStar = (count: number) => {
+      if (rateDecide.value) return
+      rating.value = count
+      console.log(count)
+    }
+    const decideRate = (bool: boolean, count: number) => {
+      rating.value = count
+      rateDecide.value = bool
+    }
     const addCount = () => {
       if (productCount.value >= 10) return toast.info('Reach the limit')
       productCount.value++
@@ -193,12 +251,19 @@ export default defineComponent({
       }
     }
     getProduct()
+    loadReview()
     return {
       pageContent,
       productCount,
       addCount,
       minusCount,
-      addBag
+      addBag,
+      hoverStar,
+      rating,
+      decideRate,
+      review,
+      reviewList,
+      leaveReview
     }
   }
 })

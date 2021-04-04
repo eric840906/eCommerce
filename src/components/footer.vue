@@ -1,5 +1,5 @@
 <template>
-  <div class="footer py-5">
+  <div class="footer py-5 front-morph">
     <div class="container">
       <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12 footer-block">
@@ -87,8 +87,6 @@ ul {
   margin: 0;
 }
 .footer {
-  background-color: #ffffff47;
-  backdrop-filter: blur(6px);
   .row {
     @media (max-width:766px) {
       .footer-block + .footer-block {

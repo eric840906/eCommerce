@@ -12,6 +12,13 @@ $primary: #906c64;
   width: 2rem;
   filter: invert(0%) sepia(4%) saturate(7465%) hue-rotate(257deg) brightness(46%) contrast(104%);
 }
+.product-rate {
+  color: #ffc100;
+}
+.star-icon {
+  width: 15px;
+  height: 15px;
+}
 .bag-icon {
   height: 2rem;
   width: 2rem;
@@ -261,11 +268,15 @@ ul {
 
 .dashboard-morph {
   background: #ffffff3b;
-  backdrop-filter: blur(3px);
   box-shadow: 0px 0px 4px black;
   border-radius: 5px;
+  @media (min-width: 768px) {
+    backdrop-filter: blur(3px);
+  }
 }
 .front-morph {
   background-color: #ffffff47;
-  backdrop-filter: blur(3px);
+  @media (min-width: 768px) {
+    backdrop-filter: blur(3px);
+  }
 }

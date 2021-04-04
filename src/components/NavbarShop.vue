@@ -56,11 +56,12 @@
               <li class="nav-item ms-md-5">
                 <router-link class="text-decoration-none text-nav-link" to="/shop/default">Shop</router-link>
               </li>
-              <li v-if="screenSize < 993" class="nav-item">
-                <Button @click="openLogin">Log in</Button>
+              <li v-if="screenSize < 993" class="d-flex nav-item my-2">
+                <Button class="ms-auto top-nav-btn" @click="openLogin" v-show="!userLog._id">Log in</Button>
+                <Button class="ms-auto top-nav-btn" @click="openLogout" v-show="userLog._id">Log out</Button>
               </li>
-              <li v-if="screenSize < 993" class="nav-item">
-                <Button @click="openSignup">Sign up</Button>
+              <li v-if="screenSize < 993" class="d-flex nav-item">
+                <Button class="ms-auto top-nav-btn" @click="openSignup" v-show="!userLog._id">Sign up</Button>
               </li>
             </ul>
           </div>
@@ -109,6 +110,15 @@ export default defineComponent({
       if (userLog.value._id) return router.push({ name: 'Cart' })
       return loginFirst()
     }
+    const openLogin = () => {
+      bus.emit('Login-open')
+    }
+    const openSignup = () => {
+      bus.emit('Signup-open')
+    }
+    const openLogout = () => {
+      bus.emit('Logout-open')
+    }
     const toggleNav = () => {
       navbarStatus.value = !navbarStatus.value
     }
@@ -116,7 +126,10 @@ export default defineComponent({
       navbarStatus,
       toggleNav,
       userLog,
-      toCart
+      toCart,
+      openLogin,
+      openSignup,
+      openLogout
     }
   }
 })
