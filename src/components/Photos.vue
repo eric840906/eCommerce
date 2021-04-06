@@ -21,7 +21,7 @@
             <div class="gird-cover">
               <p class="display-6">{{image.title}}</p>
             </div>
-            <img :src="image.images"/>
+            <img :src="image.images" alt=""/>
           </a>
         </div>
       </div>
@@ -31,7 +31,7 @@
             <div class="gird-cover">
               <p class="display-6">{{image.title}}</p>
             </div>
-            <img :src="image.images"/>
+            <img :src="image.images" alt=""/>
           </a>
         </div>
       </div>
@@ -41,7 +41,7 @@
             <div class="gird-cover">
               <p class="display-6">{{image.title}}</p>
             </div>
-            <img :src="image.images"/>
+            <img :src="image.images" alt=""/>
           </a>
         </div>
       </div>

@@ -6,7 +6,6 @@ export const uploadImage = (image: FormData) => axios({
   data: image,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {

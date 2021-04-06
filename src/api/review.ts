@@ -14,7 +14,6 @@ export const sendReview = (data: ReviewData) => post.request({
   withCredentials: true,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {
@@ -31,7 +30,6 @@ export const sendReview = (data: ReviewData) => post.request({
 //   withCredentials: true,
 //   onUploadProgress: progressEvent => {
 //     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-//     console.log(percentCompleted)
 //     if (percentCompleted < 100) {
 //       bus.emit('progress', percentCompleted)
 //     } else if (percentCompleted === 100) {
@@ -47,7 +45,6 @@ export const searchReview = (id: string, page: number) => post.request({
   withCredentials: true,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {
@@ -63,7 +60,6 @@ export const removeReview = (id: string) => post.request({
   withCredentials: true,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {

@@ -9,7 +9,6 @@ export const sendPostComment = (id: string, comment: string) => post.request({
   withCredentials: true,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {
@@ -28,7 +27,6 @@ export const getPostComment = (id: string, page: number) => post.request({
   withCredentials: true,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {
@@ -45,7 +43,6 @@ export const deletePostComment = (id: string) => post.request({
   withCredentials: true,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {

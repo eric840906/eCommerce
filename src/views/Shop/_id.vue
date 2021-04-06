@@ -209,12 +209,10 @@ export default defineComponent({
       } catch (error) {
         toast.error(error.response.data.message)
       }
-      console.log(data)
     }
     const hoverStar = (count: number) => {
       if (rateDecide.value) return
       rating.value = count
-      console.log(count)
     }
     const decideRate = (bool: boolean, count: number) => {
       rating.value = count
@@ -242,7 +240,6 @@ export default defineComponent({
       try {
         const res = await postCart(data)
         if (res.status === 200) {
-          console.log(res)
           await store.dispatch('Check')
           toast.success('item added')
         }

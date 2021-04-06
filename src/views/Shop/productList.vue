@@ -33,8 +33,9 @@
           <a href="#" class="icon-btn trans-left me-3" @click.prevent="goProduct(item._id)"><fa icon="search" type="fas" class="product-icon"></fa></a>
           <a href="#" class="icon-btn trans-right" @click.prevent="addProduct(item._id)"><img class="bag-icon" src="~@/assets/shopping-bag.svg" alt=""></a>
         </div>
-        <div class="overflow-hidden d-flex img-frame">
+        <div class="overflow-hidden d-flex img-frame position-relative">
           <img class="img-fluid product-img" :src="item.images[0]" alt="">
+          <p v-if="item.discountPrice" class="discount-tag">{{(Math.floor(100 - item.discountPrice*100/item.price))}}%<small>OFF</small></p>
         </div>
         <div class="d-flex flex-row mt-2">
           <h4 class="ms-2 text-capitalize">{{item.name}}</h4>
@@ -45,8 +46,8 @@
         </div>
         <div class="price-block d-flex flex-column justify-content-center">
           <div class="d-flex justify-content-center">
-            <p v-if="item.discountPrice" class="display-6 price old-price">${{item.price}}</p>
-            <p class="price ms-2">${{item.discountPrice ? item.discountPrice : item.price}}</p>
+            <p v-if="item.discountPrice" class="price old-price">${{item.price}}</p>
+            <p class="price ms-2 display-6">${{item.discountPrice ? item.discountPrice : item.price}}</p>
           </div>
         </div>
       </div>
@@ -112,7 +113,6 @@ export default defineComponent({
       try {
         const res = await postCart(data)
         if (res.status === 200) {
-          console.log(res)
           await store.dispatch('Check')
           toast.success('item added')
         }
@@ -259,6 +259,15 @@ export default defineComponent({
     color: white;
     top: 0;
     text-transform: uppercase;
+  }
+  .discount-tag {
+    bottom: 0;
+    right: 0;
+    margin: 0;
+    background-color: #99766d;
+    color: #fdfcfc;
+    position: absolute;
+    padding: 0 10px;
   }
 }
 </style>

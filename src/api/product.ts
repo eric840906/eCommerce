@@ -46,7 +46,6 @@ export const getProducts = (category: string, page: number, filterString = '') =
   withCredentials: true,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {
@@ -62,7 +61,6 @@ export const getProduct = (id: string) => product.request({
   withCredentials: true,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {

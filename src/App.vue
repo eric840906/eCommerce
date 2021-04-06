@@ -37,7 +37,6 @@ export default defineComponent({
     Progressbar
   },
   setup () {
-    console.log(process.env)
     const store = useStore()
     store.dispatch('Check')
     const modalComponent = ref('')
@@ -79,6 +78,7 @@ export default defineComponent({
   color: #2c3e50;
   background-image: url('~@/assets/background.png');
   background-color: #efd2c4;
+  min-height: 100vh;
 }
 .top-nav-btn {
   width: 100px;

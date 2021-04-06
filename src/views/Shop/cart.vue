@@ -58,7 +58,6 @@ export default defineComponent({
     const router = useRouter()
     const toast = useToast()
     const deleteProduct = async (product: string) => {
-      console.log({ product })
       try {
         const res = await deleteItem({ product })
         if (res.status === 200) {

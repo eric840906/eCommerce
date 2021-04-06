@@ -43,9 +43,10 @@ export default defineComponent({
   setup () {
     const store = useStore()
     const router = useRouter()
+    console.log(router.currentRoute)
     const modalComponent = ref('')
     const bannerTitle = computed(() => {
-      return router.currentRoute.value.path.split('/')[1]
+      return router.currentRoute.value.name
     })
     const screenWidth = computed(() => {
       return store.getters.getScreenSize

@@ -1,98 +1,96 @@
 <template>
-  <div class="view-window d-flex flex-column">
-    <div class="d-flex p-3 m-2 dashboard-morph user-row">
-      <div class="col d-flex align-items-center text-start flex-column w-100">
-        <div class="title w-100 d-flex">
-          <h5 class="fw-bolder text-uppercase">Recent Posts</h5>
-          <Button class="ml-auto">Show all</Button>
-        </div>
-        <div class="posts-container d-flex overflow-auto w-100 py-3">
-          <p v-if="recentPosts.data.length === 0" class="text-uppercase m-auto">Currently nothing here</p>
-          <template v-for="item in recentPosts.data" :key="item._id">
-            <Card :card="item"></Card>
-          </template>
-        </div>
+  <div class="w-100 d-flex p-3 m-md-2 flex-column flex-md-row dashboard-morph user-row flex-grow-1 dashboard-morph user-row">
+    <div class="align-items-center text-start flex-column w-100">
+      <div class="title w-100 d-flex">
+        <h5 class="fw-bolder text-uppercase">Recent Posts</h5>
+        <Button class="ml-auto">Show all</Button>
+      </div>
+      <div class="posts-container d-flex overflow-auto w-100 py-3">
+        <p v-if="recentPosts.data.length === 0" class="text-uppercase m-auto">Currently nothing here</p>
+        <template v-for="item in recentPosts.data" :key="item._id">
+          <Card :card="item"></Card>
+        </template>
       </div>
     </div>
-    <div class="d-flex">
-      <div class="col text-start">
-        <form class="p-3 m-2 dashboard-morph" @submit.prevent="newPost">
-          <div class="title w-100 d-flex">
-            <h5 class="fw-bolder text-uppercase">Make new post</h5>
-          </div>
-          <div class="form-group">
-            <label for="post-title">Post title</label>
-            <input
-              class="form-control"
-              id="post-title"
-              v-model="postData.title"
-            />
-          </div>
-          <div class="form-group my-2 d-flex flex-column">
-            <label>Category</label>
-            <select class="custom-select custom-select-sm" v-model="postData.category">
-              <option selected value="Other">Other</option>
-              <option value="News">News</option>
-              <option value="Cakes">Cakes</option>
-              <option value="Cookies">Cookies</option>
-              <option value="Tips">Tips</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="user-desc">Article</label>
-            <textarea
-              class="form-control"
-              id="user-desc"
-              v-model="postData.article"
-            />
-            <small id="nameHelp" class="form-text text-muted"
-              >Enter some words to introduce yourself</small
-            >
-          </div>
-          <div class="form-group my-2">
-            <Button><label for="photo">Upload cover image</label></Button>
-            <input
-              type="file"
-              class="form-control"
-              id="photo"
-              accept="image/*"
-              style="display:none"
-              @change.prevent="uploadToImgur"
-            />
-          </div>
-          <div class="form-group">
-            <img style="max-height: 300px;" v-if="imageThumb" :src="imageThumb" alt="">
-          </div>
-          <div class="form-group my-2">
-            <Button @click="otherShow = !otherShow">Upload other images</Button>
-          </div>
-          <transition name="top-show">
-            <form class="form-group my-2" v-show="otherShow" @submit.prevent="uploadOthers">
-              <input class="custom-file-input" type="file" name="image0" id="image0" @change="putImage($event, 0)">
-              <input class="custom-file-input" type="file" name="image1" id="image1" @change="putImage($event, 1)">
-              <input class="custom-file-input" type="file" name="image2" id="image2" @change="putImage($event, 2)">
-              <input class="custom-file-input" type="file" name="image3" id="image3" @change="putImage($event, 3)">
-              <input class="custom-file-input" type="file" name="image4" id="image4" @change="putImage($event, 4)">
-              <div class="form-group my-2">
-                <Button class="ml-auto" type="submit">Upload them all</Button>
-              </div>
-            </form>
-          </transition>
-          <!-- <div class="form-group">
-            <label for="user-image"
-              >Select a new profile pic</label
-            >
-            <input
-              type="file"
-              class="form-control-file display-none"
-              id="exampleFormControlFile1"
-            />
-          </div> -->
-          <div class="form-group d-flex">
-            <Button class="ml-auto" type="submit">Make a new post</Button>
-          </div>
-        </form>
-      </div>
+  </div>
+  <div class="d-flex flex-grow-1">
+    <div class="col text-start">
+      <form class="p-3 m-2 dashboard-morph" @submit.prevent="newPost">
+        <div class="title w-100 d-flex">
+          <h5 class="fw-bolder text-uppercase">Make new post</h5>
+        </div>
+        <div class="form-group">
+          <label for="post-title">Post title</label>
+          <input
+            class="form-control"
+            id="post-title"
+            v-model="postData.title"
+          />
+        </div>
+        <div class="form-group my-2 d-flex flex-column">
+          <label>Category</label>
+          <select class="custom-select custom-select-sm" v-model="postData.category">
+            <option selected value="Other">Other</option>
+            <option value="News">News</option>
+            <option value="Cakes">Cakes</option>
+            <option value="Cookies">Cookies</option>
+            <option value="Tips">Tips</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="user-desc">Article</label>
+          <textarea
+            class="form-control"
+            id="user-desc"
+            v-model="postData.article"
+          />
+          <small id="nameHelp" class="form-text text-muted"
+            >Enter some words to introduce yourself</small
+          >
+        </div>
+        <div class="form-group my-2">
+          <Button><label for="photo">Upload cover image</label></Button>
+          <input
+            type="file"
+            class="form-control"
+            id="photo"
+            accept="image/*"
+            style="display:none"
+            @change.prevent="uploadToImgur"
+          />
+        </div>
+        <div class="form-group">
+          <img style="max-height: 300px;" v-if="imageThumb" :src="imageThumb" alt="">
+        </div>
+        <div class="form-group my-2">
+          <Button @click="otherShow = !otherShow">Upload other images</Button>
+        </div>
+        <transition name="top-show">
+          <form class="form-group my-2" v-show="otherShow" @submit.prevent="uploadOthers">
+            <input class="custom-file-input" type="file" name="image0" id="image0" @change="putImage($event, 0)">
+            <input class="custom-file-input" type="file" name="image1" id="image1" @change="putImage($event, 1)">
+            <input class="custom-file-input" type="file" name="image2" id="image2" @change="putImage($event, 2)">
+            <input class="custom-file-input" type="file" name="image3" id="image3" @change="putImage($event, 3)">
+            <input class="custom-file-input" type="file" name="image4" id="image4" @change="putImage($event, 4)">
+            <div class="form-group my-2">
+              <Button class="ml-auto" type="submit">Upload them all</Button>
+            </div>
+          </form>
+        </transition>
+        <!-- <div class="form-group">
+          <label for="user-image"
+            >Select a new profile pic</label
+          >
+          <input
+            type="file"
+            class="form-control-file display-none"
+            id="exampleFormControlFile1"
+          />
+        </div> -->
+        <div class="form-group d-flex">
+          <Button class="ml-auto" type="submit">Make a new post</Button>
+        </div>
+      </form>
     </div>
   </div>
 </template>

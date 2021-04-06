@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="dashboard p-5">
+    <div class="dashboard">
     <h1>DASHBOARD</h1>
     <div class="container">
       <div class="row">
-        <div class="col-2">
+        <div class="col-md-2">
           <nav class="p-2 m-2">
             <ul>
               <li class="drawer-item">
@@ -54,8 +54,7 @@
             </ul>
           </nav>
         </div>
-        <div class="col-10">
-          <div class="container">
+        <div class="col-md-10 d-flex flex-wrap flex-column flex-md-row">
             <suspense>
               <template #default>
                 <router-view v-slot="{ Component }">
@@ -68,7 +67,6 @@
                 <loading></loading>
               </template>
             </suspense>
-          </div>
         </div>
       </div>
     </div>
@@ -107,7 +105,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dashboard {
-  height: 100vh;
   nav {
     background: #ffffff3b;
     backdrop-filter: blur(3px);

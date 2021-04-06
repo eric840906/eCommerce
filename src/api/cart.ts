@@ -13,7 +13,6 @@ export const addCart = (data: CartProduct) => cart.request({
   withCredentials: true,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {
@@ -30,7 +29,6 @@ export const removeCartItem = (product: object) => cart.request({
   withCredentials: true,
   onUploadProgress: progressEvent => {
     const percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-    console.log(percentCompleted)
     if (percentCompleted < 100) {
       bus.emit('progress', percentCompleted)
     } else if (percentCompleted === 100) {

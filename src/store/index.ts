@@ -55,16 +55,13 @@ export default createStore({
     },
     setUser (state, user) {
       state.user = user
-      console.log(state.user)
     }
   },
   actions: {
     async Login ({ commit }, userInfo: UserInfo) {
       try {
         commit('loadingChanger')
-        console.log(userInfo)
         const res = await userLogin(userInfo)
-        console.log(res)
         if (res.data.state === 'success') {
           commit('setUser', res.data.data.user)
           toast.success(`Welcome back! ${res.data.data.user.name}`)
@@ -80,7 +77,6 @@ export default createStore({
       try {
         commit('loadingChanger')
         const res = await userCheck()
-        console.log(res)
         if (res.data.state === 'success') {
           commit('setUser', res.data.data[0])
           commit('loadingChanger')
@@ -93,7 +89,6 @@ export default createStore({
       try {
         commit('loadingChanger')
         const res = await userLogout()
-        console.log(res)
         if (res.status === 200) {
           toast.success('Logged out successfully, see you next time!')
           commit('setUser', {})
