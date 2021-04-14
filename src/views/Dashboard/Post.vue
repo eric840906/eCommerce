@@ -96,7 +96,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-import { imageUpload, postNewPost } from '@/api'
+import { imageUpload, postNewPost, getContent } from '@/api'
 import { useStore } from 'vuex'
 import axios from 'axios'
 import Button from '@/components/btn.vue'
@@ -185,11 +185,7 @@ export default defineComponent({
     const getPosts = async () => {
       try {
         store.dispatch('loading')
-        const res = await axios({
-          url: 'http://127.0.0.1:8000/api/post/recent',
-          method: 'GET',
-          withCredentials: true
-        })
+        const res = await getContent(1, 5)
         recentPosts.data = res.data.data
         if (res.data.state === 'success') {
           store.dispatch('loading')
